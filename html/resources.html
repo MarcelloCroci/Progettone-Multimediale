@@ -1,0 +1,304 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Resource Catalog
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+ </head>
+ <body class="bg-gray-50 text-gray-800">
+  <!-- Header -->
+  <header class="bg-white shadow">
+   <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+     <img alt="ResourceHub logo" class="h-10 w-10" src="https://placehold.co/40x40"/>
+     <h1 class="text-xl font-semibold">
+      ResourceHub
+     </h1>
+    </div>
+    <nav class="flex items-center space-x-6">
+     <a class="text-gray-600 hover:text-blue-600" href="#">
+      Home
+     </a>
+     <a class="text-blue-600 font-semibold" href="#">
+      Catalog
+     </a>
+     <a class="text-gray-600 hover:text-blue-600" href="#">
+      My Loans
+     </a>
+     <a class="text-gray-600 hover:text-blue-600" href="#">
+      Dashboard
+     </a>
+     <div class="bg-blue-600 text-white rounded-full h-10 w-10 flex items-center justify-center">
+      AU
+     </div>
+    </nav>
+   </div>
+  </header>
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+   <h2 class="text-2xl font-bold mb-2">
+    Resource Catalog
+   </h2>
+   <p class="text-gray-600 mb-6">
+    Browse all available resources across our centers
+   </p>
+   <!-- Search and Filters -->
+   <div class="flex items-center space-x-4 mb-6">
+    <div class="flex items-center bg-white border rounded-lg px-4 py-2 w-full">
+     <i class="fas fa-search text-gray-400">
+     </i>
+     <input class="ml-2 w-full focus:outline-none" placeholder="Search" type="text"/>
+    </div>
+    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+     Apply Filters
+    </button>
+   </div>
+   <!-- Categories -->
+   <div class="flex items-center space-x-4 mb-6">
+    <button class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg">
+     All
+    </button>
+    <button class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg">
+     Hardware
+    </button>
+    <button class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg">
+     Software
+    </button>
+   </div>
+   <!-- Resource Count -->
+   <p class="text-gray-600 mb-4">
+    5 resources found
+   </p>
+   <!-- Resource Cards -->
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Card 1 -->
+    <div class="bg-white border rounded-lg p-4">
+     <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">
+       Tablet
+      </h3>
+      <span class="text-red-600 bg-red-100 px-2 py-1 rounded-full text-sm">
+       Unavailable
+      </span>
+     </div>
+     <p class="text-gray-600">
+      MediaTech Napoli
+     </p>
+     <p class="text-gray-600">
+      Inventory #: INV-3-2-0002
+     </p>
+     <p class="text-gray-600">
+      Added: Jan 22, 2025
+     </p>
+     <p class="text-gray-600 mb-4">
+      Sample resource 2
+     </p>
+     <button class="bg-white border border-gray-300 text-gray-600 px-4 py-2 rounded-lg w-full">
+      View Details
+     </button>
+    </div>
+    <!-- Card 2 -->
+    <div class="bg-white border rounded-lg p-4">
+     <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">
+       Tablet
+      </h3>
+      <span class="text-red-600 bg-red-100 px-2 py-1 rounded-full text-sm">
+       Unavailable
+      </span>
+     </div>
+     <p class="text-gray-600">
+      MediaTech Torino
+     </p>
+     <p class="text-gray-600">
+      Inventory #: INV-4-2-0008
+     </p>
+     <p class="text-gray-600">
+      Added: Nov 3, 2023
+     </p>
+     <p class="text-gray-600 mb-4">
+      Sample resource 8
+     </p>
+     <button class="bg-white border border-gray-300 text-gray-600 px-4 py-2 rounded-lg w-full">
+      View Details
+     </button>
+    </div>
+    <!-- Card 3 -->
+    <div class="bg-white border rounded-lg p-4">
+     <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">
+       Tablet
+      </h3>
+      <span class="text-blue-600 bg-blue-100 px-2 py-1 rounded-full text-sm">
+       Loaned
+      </span>
+     </div>
+     <p class="text-gray-600">
+      MediaTech Torino
+     </p>
+     <p class="text-gray-600">
+      Inventory #: INV-4-2-0011
+     </p>
+     <p class="text-gray-600">
+      Added: Jun 22, 2023
+     </p>
+     <p class="text-gray-600 mb-4">
+      Sample resource 11
+     </p>
+     <button class="bg-white border border-gray-300 text-gray-600 px-4 py-2 rounded-lg w-full">
+      View Details
+     </button>
+    </div>
+    <!-- Card 4 -->
+    <div class="bg-white border rounded-lg p-4">
+     <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">
+       Tablet
+      </h3>
+      <span class="text-blue-600 bg-blue-100 px-2 py-1 rounded-full text-sm">
+       Loaned
+      </span>
+     </div>
+     <p class="text-gray-600">
+      MediaTech Torino
+     </p>
+     <p class="text-gray-600">
+      Inventory #: INV-4-2-0018
+     </p>
+     <p class="text-gray-600">
+      Added: Nov 23, 2024
+     </p>
+     <p class="text-gray-600 mb-4">
+      Sample resource 18
+     </p>
+     <button class="bg-white border border-gray-300 text-gray-600 px-4 py-2 rounded-lg w-full">
+      View Details
+     </button>
+    </div>
+    <!-- Card 5 -->
+    <div class="bg-white border rounded-lg p-4">
+     <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">
+       Tablet
+      </h3>
+      <span class="text-green-600 bg-green-100 px-2 py-1 rounded-full text-sm">
+       Available
+      </span>
+     </div>
+     <p class="text-gray-600">
+      MediaTech Napoli
+     </p>
+     <p class="text-gray-600">
+      Inventory #: INV-3-2-0019
+     </p>
+     <p class="text-gray-600">
+      Added: Feb 11, 2025
+     </p>
+     <p class="text-gray-600 mb-4">
+      Sample resource 19
+     </p>
+     <button class="bg-white border border-gray-300 text-gray-600 px-4 py-2 rounded-lg w-full">
+      View Details
+     </button>
+    </div>
+   </div>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-8">
+   <div class="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div>
+     <h3 class="text-lg font-semibold mb-2">
+      ResourceHub
+     </h3>
+     <p class="text-gray-600">
+      A network of resource centers across the country, providing hardware and software resources to the public.
+     </p>
+    </div>
+    <div>
+     <h3 class="text-lg font-semibold mb-2">
+      Quick Links
+     </h3>
+     <ul class="text-gray-600 space-y-2">
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        Home
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        Resource Catalog
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        Centers
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        About Us
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        Contact
+       </a>
+      </li>
+     </ul>
+    </div>
+    <div>
+     <h3 class="text-lg font-semibold mb-2">
+      Services
+     </h3>
+     <ul class="text-gray-600 space-y-2">
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        Borrowing Guide
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        Reservations
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        Educational Resources
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        FAQ
+       </a>
+      </li>
+      <li>
+       <a class="hover:text-blue-600" href="#">
+        Support
+       </a>
+      </li>
+     </ul>
+    </div>
+    <div>
+     <h3 class="text-lg font-semibold mb-2">
+      Contact
+     </h3>
+     <p class="text-gray-600">
+      Via Roma 123, 00100 Rome, Italy
+     </p>
+     <p class="text-gray-600">
+      +39 0123 4567
+     </p>
+     <p class="text-gray-600">
+      info@resourcehub.com
+     </p>
+    </div>
+   </div>
+  </footer>
+ </body>
+</html>
