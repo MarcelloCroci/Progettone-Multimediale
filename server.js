@@ -1,25 +1,311 @@
+// server.js
+require('dotenv').config();
 const express = require('express');
 const { Pool } = require('pg');
-const path = require('path'); // Importa il modulo 'path'
+const path = require('path');
+const bcrypt = require('bcrypt');
+
 const app = express();
-const bcrypt = require("bcrypt");
-app.use(express.json()); // Middleware per il parsing dei JSON
-require('dotenv').config();
+app.use(express.json());
 
-
-
-
+// Configurazione NeonDB (PostgreSQL)
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
 });
 
 // Serve i file statici dalla cartella 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Endpoint per la root (che ora restituirà index.html)
+// Route per la root → home.html
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'));
+  res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'));
 });
+
+// Carica risorse con filtri
+app.get('/api/risorse', async (req, res) => {
+  const { search, tipo } = req.query;
+  const clauses = [];
+  const values  = [];
+
+  if (search) {
+    values.push(`%${search.toLowerCase()}%`);
+    clauses.push(`(LOWER(nome) LIKE $${values.length} OR LOWER(tipo) LIKE $${values.length})`);
+  }
+  if (tipo) {
+    values.push(tipo.toLowerCase());
+    clauses.push(`LOWER(tipo) = $${values.length}`);
+  }
+
+  const where = clauses.length ? 'WHERE ' + clauses.join(' AND ') : '';
+  const sql = `
+    SELECT id_risorsa, nome, casa_produttrice, descrizione, disponibilita, miniature
+    FROM Risorsa
+    ${where}
+    ORDER BY nome
+    LIMIT 100
+  `;
+
+  try {
+    console.log('Eseguo:', sql.trim(), values);
+    const { rows } = await pool.query(sql, values);
+    res.json(rows);
+  } catch (err) {
+    console.error('Errore /api/risorse:', err);
+    res.status(500).json({ error: 'Errore interno server', details: err.message });
+  }
+});
+
+// 1) Dettagli di una singola risorsa
+app.get('/api/risorsa/:id', async (req, res) => {
+  const id = req.params.id;
+  const sql = `
+    SELECT 
+      R.id_risorsa, R.nome, R.casa_produttrice, R.descrizione,
+      R.disponibilita, R.quantita, R.data_rilascio, R.pegi,
+      R.tipo, R.categoria_didattico, R.piattaforma_didattico,
+      C.nome_centro AS centro_nome, C.citta AS centro_citta,
+      R.miniature
+    FROM Risorsa R
+    JOIN Centro C ON R.id_centro = C.id_centro
+    WHERE R.id_risorsa = $1
+  `;
+  try {
+    const { rows } = await pool.query(sql, [id]);
+    if (!rows.length) return res.status(404).json({ error: 'Risorsa non trovata' });
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Errore /api/risorsa/:id', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 2) Recensioni di una risorsa
+app.get('/api/recensioni', async (req, res) => {
+  const { risorsaId } = req.query;
+  const sql = `
+    SELECT 
+      Rv.titolo_r, Rv.testo_r, Rv.voto, U.nome_utente 
+    FROM Recensione Rv
+    JOIN Utente U ON Rv.id_utente = U.id_utente
+    WHERE Rv.id_risorsa = $1
+    ORDER BY Rv.id_recensione DESC
+  `;
+  try {
+    const { rows } = await pool.query(sql, [risorsaId]);
+    res.json(rows);
+  } catch (err) {
+    console.error('Errore /api/recensioni', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//carica centri
+app.get('/api/centri', async (req, res) => {
+  const { search } = req.query;
+  const clauses = [];
+  const values  = [];
+
+  if (search) {
+    values.push(`%${search.toLowerCase()}%`);
+    clauses.push(`
+      (LOWER(nome_centro) LIKE $${values.length}
+       OR LOWER(citta) LIKE $${values.length}
+       OR LOWER(regione) LIKE $${values.length}
+       OR cap LIKE $${values.length})
+    `);
+  }
+
+  const where = clauses.length ? 'WHERE ' + clauses.join(' AND ') : '';
+  const sql = `
+    SELECT id_centro, nome_centro, citta, regione, via,
+           numero_civico, cap, telefono
+    FROM Centro
+    ${where}
+    ORDER BY nome_centro
+    LIMIT 100
+  `;
+
+  try {
+    const { rows } = await pool.query(sql, values);
+    res.json(rows);
+  } catch (err) {
+    console.error('Errore nel caricamento centri:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Aggiungi al carrello
+app.post('/api/carrello', async (req, res) => {
+  const { id_utente, id_risorsa } = req.body;
+  const sql = `INSERT INTO Carrello (id_utente, id_risorsa, data_inserimento)
+               VALUES ($1, $2, NOW()) RETURNING *`;
+  try {
+    const { rows } = await pool.query(sql, [id_utente, id_risorsa]);
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Errore POST /api/carrello:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Prenota risorsa
+app.post('/api/prenotazioni', async (req, res) => {
+  const { id_utente, id_risorsa } = req.body;
+  const sql = `INSERT INTO Prenotazione (id_risorsa, id_utente, data_prenotazione)
+               VALUES ($1, $2, NOW()) RETURNING *`;
+  try {
+    const { rows } = await pool.query(sql, [id_risorsa, id_utente]);
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Errore POST /api/prenotazioni:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Lista carrello per utente
+app.get('/api/carrello', async (req, res) => {
+  const { id_utente } = req.query;
+  const sql = `
+    SELECT C.id_carrello, R.id_risorsa, R.nome, R.miniature, C.data_inserimento
+    FROM Carrello C
+    JOIN Risorsa R ON C.id_risorsa = R.id_risorsa
+    WHERE C.id_utente = $1
+    ORDER BY C.data_inserimento DESC
+  `;
+  try {
+    const { rows } = await pool.query(sql, [id_utente]);
+    res.json(rows);
+  } catch (err) {
+    console.error('Errore GET /api/carrello:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Rimuovi voce carrello
+app.delete('/api/carrello/:id', async (req, res) => {
+  try {
+    await pool.query('DELETE FROM Carrello WHERE id_carrello = $1', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Errore DELETE /api/carrello/:id', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// Registrazione utente
+app.post('/api/register', async (req, res) => {
+  const { nome, cognome, email, password, ddn, telefono } = req.body;
+  if (!nome || !cognome || !email || !password || !ddn || !telefono) {
+    return res.status(400).json({ error: 'Tutti i campi sono obbligatori.' });
+  }
+  try {
+    // nome_utente = parte prima della @
+    const nome_utente = email.split('@')[0];
+    const hashed = await bcrypt.hash(password, 10);
+    const sql = `
+      INSERT INTO Utente
+        (nome_utente, password, email, numero_tel, nome, cognome, data_nascita)
+      VALUES ($1,$2,$3,$4,$5,$6,$7)
+      RETURNING id_utente, nome_utente, email, numero_tel, nome, cognome, data_nascita;
+    `;
+    const values = [nome_utente, hashed, email, telefono, nome, cognome, ddn];
+    const { rows } = await pool.query(sql, values);
+    // ritorna i dati utente senza password
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Errore /api/register:', err);
+    const msg = err.code === '23505'
+      ? 'Email già in uso.'
+      : 'Errore interno.';
+    res.status(500).json({ error: msg });
+  }
+});
+
+// Login utente
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email e password sono obbligatorie.' });
+  }
+  try {
+    // Cerca l’utente
+    const sql = `SELECT id_utente, nome_utente, password, email, numero_tel, nome, cognome, data_nascita 
+                 FROM Utente WHERE email = $1`;
+    const { rows } = await pool.query(sql, [email]);
+    if (!rows.length) {
+      return res.status(401).json({ error: 'Credenziali errate.' });
+    }
+    const user = rows[0];
+    // Verifica password
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).json({ error: 'Credenziali errate.' });
+    }
+    // Ritorna dati senza password
+    delete user.password;
+    res.json(user);
+  } catch (err) {
+    console.error('Errore /api/login:', err);
+    res.status(500).json({ error: 'Errore interno.' });
+  }
+});
+
+
+// Ottieni prestiti attivi per utente
+app.get('/api/prestiti', async (req, res) => {
+  const { id_utente } = req.query;
+  const sql = `
+    SELECT P.id_prestito, R.nome, R.miniature, P.data_prestito
+    FROM Prestito P
+    JOIN Risorsa R ON P.id_risorsa = R.id_risorsa
+    WHERE P.id_utente = $1 AND P.data_restituzione IS NULL
+    ORDER BY P.data_prestito DESC
+  `;
+  try {
+    const { rows } = await pool.query(sql, [id_utente]);
+    res.json(rows);
+  } catch (err) {
+    console.error('Errore GET /api/prestiti:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Ottieni prenotazioni attive per utente
+app.get('/api/prenotazioni', async (req, res) => {
+  const { id_utente } = req.query;
+  const sql = `
+    SELECT Pr.id_prenotazione, R.nome, R.miniature, Pr.data_prenotazione
+    FROM Prenotazione Pr
+    JOIN Risorsa R ON Pr.id_risorsa = R.id_risorsa
+    WHERE Pr.id_utente = $1
+    ORDER BY Pr.data_prenotazione DESC
+  `;
+  try {
+    const { rows } = await pool.query(sql, [id_utente]);
+    res.json(rows);
+  } catch (err) {
+    console.error('Errore GET /api/prenotazioni:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
+// Avvio del server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
+
+
+
+
+
+
+
+
 
 
 // Endpoint per ottenere i generi dal database
@@ -588,9 +874,3 @@ app.get('/api/utenti', async (req, res) => {
 
 
 
-
-// Avvio del server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});

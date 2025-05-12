@@ -5,7 +5,8 @@
   <title>
    Pack2Go
   </title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <link rel="shortcut icon" href="../img/box.png" type="image/x-icon">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css" />
  </head>
@@ -23,8 +24,24 @@
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/home.html">Home</a>
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources.html">Catalogo</a>
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Center</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/cart.html">Carrello</a>
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Dashboard</a>
-      <div class="bg-[#714be1] text-white rounded-full h-10 w-10 flex items-center justify-center">AU</div>
+      <!-- User Menu -->
+<div id="userMenu" class="relative inline-block text-left">
+  <button id="userBtn" type="button"
+    class="flex items-center justify-center h-10 w-10 rounded-full bg-[#714be1] text-white focus:outline-none"
+    aria-expanded="false" aria-haspopup="true">
+    <!-- Contenuto gestito da JS -->
+  </button>
+  <!-- Dropdown -->
+  <div id="userDropdown"
+       class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="userBtn">
+      <!-- Voci gestite da JS -->
+    </div>
+  </div>
+</div>
+
      </nav>
     </div>
   </header>
@@ -316,5 +333,7 @@
      </div>
     </div>
    </footer>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/userMenu.js"></script>
  </body>
 </html>
