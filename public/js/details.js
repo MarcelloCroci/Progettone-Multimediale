@@ -75,3 +75,70 @@ $(document).ready(function() {
     });
   }).fail(() => alert('Errore nel caricamento delle recensioni.'));
 });
+$(document).ready(function () {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const id_risorsa = localStorage.getItem('id_risorsa');
+
+  if (user && (user.ruolo === 'admin' || user.ruolo === 'amministratore')) {
+    $('#adminActions').removeClass('hidden');
+  }
+
+  $('#editResourceBtn').on('click', function () {
+    // Precompila il form con i dati attuali
+    $.get(`/api/risorse/${id_risorsa}`, function (res) {
+      $('#editNome').val(res.nome);
+      $('#editMarca').val(res.marca);
+      $('#editTipo').val(res.tipo);
+      $('#editDisponibilita').val(res.disponibilita);
+      $('#editQuantita').val(res.quantita);
+      $('#editMiniatura').val(res.miniature);
+      $('#editModal').removeClass('hidden');
+    });
+  });
+
+  $('#cancelEditBtn').click(() => {
+    $('#editModal').addClass('hidden');
+  });
+
+  $('#editForm').submit(function (e) {
+    e.preventDefault();
+    const updatedData = {
+      nome: $('#editNome').val(),
+      marca: $('#editMarca').val(),
+      tipo: $('#editTipo').val(),
+      disponibilita: parseInt($('#editDisponibilita').val()),
+      quantita: parseInt($('#editQuantita').val()),
+      miniature: $('#editMiniatura').val()
+    };
+
+    $.ajax({
+      url: `/api/risorse/${id_risorsa}`,
+      method: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify(updatedData),
+      success: () => {
+        alert('Risorsa aggiornata!');
+        location.reload();
+      },
+      error: () => {
+        alert('Errore durante l\'aggiornamento.');
+      }
+    });
+  });
+
+  $('#deleteResourceBtn').on('click', function () {
+    if (confirm('Sei sicuro di voler eliminare questa risorsa?')) {
+      $.ajax({
+        url: `/api/risorse/${id_risorsa}`,
+        method: 'DELETE',
+        success: () => {
+          alert('Risorsa eliminata con successo.');
+          window.location.href = 'resources.html';
+        },
+        error: () => {
+          alert('Errore durante l\'eliminazione.');
+        }
+      });
+    }
+  });
+});

@@ -11,6 +11,7 @@
   <script src="https://cdn.tailwindcss.com">
   </script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  </head>
  <body class="bg-gray-50 text-gray-800">
     <header class="bg-white shadow">
@@ -47,179 +48,56 @@
     </div>
   </header>
   <main class="container mx-auto px-6 py-8">
-   <h2 class="text-2xl font-bold mb-2">
-    Resource Hub Dashboard
-   </h2>
-   <p class="text-gray-600 mb-6">
-    Monitor resource usage and availability across all centers
-   </p>
-   <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white shadow rounded-lg p-6">
-     <h3 class="text-lg font-semibold text-gray-800">
-      Total Resources
-     </h3>
-     <p class="text-3xl font-bold text-gray-800 mt-2">
-      96
-     </p>
-     <p class="text-gray-600">
-      Total number of resources across all centers
-     </p>
+    <script>
+// Redirect se non admin
+const user = JSON.parse(localStorage.getItem('user'));
+if (!user || (user.ruolo !== 'admin' && user.ruolo !== 'amministratore')) {
+  alert('Accesso riservato agli amministratori');
+  window.location.href = 'login.html';
+}
+</script>
+<!-- Resource Usage Over Time -->
+<div class="bg-white shadow rounded-lg p-6 mb-10">
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="text-lg font-semibold text-gray-800">Resource Usage Over Time</h3>
+    <select id="categoryFilter" class="border border-gray-300 rounded px-3 py-1 text-gray-600">
+      <option value="">All Categories</option>
+    </select>
+  </div>
+  <canvas id="loanChart" class="w-full h-48"></canvas>
+</div>
+
+<!-- Most Used Categories -->
+<div class="bg-white shadow rounded-lg p-6">
+  <h3 class="text-lg font-semibold text-gray-800 mb-4">Most Used Categories</h3>
+  <canvas id="catChart" class="w-full h-48"></canvas>
+</div>
+
+
+
+  <!-- Tabella Utenti con prestiti >180 giorni -->
+  <div class="bg-white shadow rounded-lg p-6 mt-8">
+    <h3 class="text-lg font-semibold mb-4">Utenti con prestiti attivi da &gt;180 giorni</h3>
+    <div class="overflow-x-auto">
+      <table id="overdueUserTable" class="min-w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-gray-700">
+            <th class="px-4 py-2">Utente</th>
+            <th class="px-4 py-2">Email</th>
+            <th class="px-4 py-2">Risorsa</th>
+            <th class="px-4 py-2">Data Prestito</th>
+            <th class="px-4 py-2">Giorni su Loan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- popolato da JS -->
+        </tbody>
+      </table>
     </div>
-    <div class="bg-white shadow rounded-lg p-6">
-     <h3 class="text-lg font-semibold text-gray-800">
-      Available Resources
-     </h3>
-     <p class="text-3xl font-bold text-gray-800 mt-2">
-      65
-     </p>
-     <p class="text-green-600 font-semibold">
-      ↑ 65 available
-     </p>
-     <p class="text-gray-600">
-      68% of total resources
-     </p>
-    </div>
-    <div class="bg-white shadow rounded-lg p-6">
-     <h3 class="text-lg font-semibold text-gray-800">
-      Active Loans
-     </h3>
-     <p class="text-3xl font-bold text-gray-800 mt-2">
-      3
-     </p>
-     <p class="text-gray-600">
-      Resources currently on loan
-     </p>
-    </div>
-    <div class="bg-white shadow rounded-lg p-6">
-     <h3 class="text-lg font-semibold text-gray-800">
-      Pending Reservations
-     </h3>
-     <p class="text-3xl font-bold text-gray-800 mt-2">
-      11
-     </p>
-     <p class="text-gray-600">
-      Reservations waiting to be fulfilled
-     </p>
-    </div>
-   </div>
-   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="bg-white shadow rounded-lg p-6">
-     <div class="flex justify-between items-center mb-4">
-      <h3 class="text-lg font-semibold text-gray-800">
-       Resource Usage Over Time
-      </h3>
-      <select class="border border-gray-300 rounded px-3 py-1 text-gray-600">
-       <option>
-        All Categories
-       </option>
-      </select>
-     </div>
-     <div class="h-48 bg-blue-100 rounded-lg">
-     </div>
-    </div>
-    <div class="bg-white shadow rounded-lg p-6">
-     <h3 class="text-lg font-semibold text-gray-800 mb-4">
-      Most Used Categories
-     </h3>
-     <div class="space-y-2">
-      <div class="flex items-center">
-       <span class="w-1/3 text-gray-800">
-        Laptop
-       </span>
-       <div class="w-2/3 bg-[#714be1] h-4 rounded-full" style="width: 80%;">
-       </div>
-       <span class="ml-2 text-gray-800">
-        8
-       </span>
-      </div>
-      <div class="flex items-center">
-       <span class="w-1/3 text-gray-800">
-        E-reader
-       </span>
-       <div class="w-2/3 bg-[#714be1] h-4 rounded-full" style="width: 70%;">
-       </div>
-       <span class="ml-2 text-gray-800">
-        7
-       </span>
-      </div>
-      <div class="flex items-center">
-       <span class="w-1/3 text-gray-800">
-        Video Game
-       </span>
-       <div class="w-2/3 bg-[#714be1] h-4 rounded-full" style="width: 70%;">
-       </div>
-       <span class="ml-2 text-gray-800">
-        7
-       </span>
-      </div>
-      <div class="flex items-center">
-       <span class="w-1/3 text-gray-800">
-        Educational Software
-       </span>
-       <div class="w-2/3 bg-[#714be1] h-4 rounded-full" style="width: 50%;">
-       </div>
-       <span class="ml-2 text-gray-800">
-        5
-       </span>
-      </div>
-      <div class="flex items-center">
-       <span class="w-1/3 text-gray-800">
-        Digital Camera
-       </span>
-       <div class="w-2/3 bg-[#714be1] h-4 rounded-full" style="width: 50%;">
-       </div>
-       <span class="ml-2 text-gray-800">
-        5
-       </span>
-      </div>
-     </div>
-    </div>
-   </div>
-   <div class="bg-white shadow rounded-lg p-6 mt-8">
-    <h3 class="text-lg font-semibold text-gray-800 mb-4">
-     Resources on Loan &gt;180 Days
-    </h3>
-    <table class="w-full text-left border-collapse">
-     <thead>
-      <tr>
-       <th class="border-b py-2 text-gray-600">
-        Resource
-       </th>
-       <th class="border-b py-2 text-gray-600">
-        Category
-       </th>
-       <th class="border-b py-2 text-gray-600">
-        Center
-       </th>
-       <th class="border-b py-2 text-gray-600">
-        Loan Start
-       </th>
-       <th class="border-b py-2 text-gray-600">
-        Days on Loan
-       </th>
-      </tr>
-     </thead>
-     <tbody>
-      <tr>
-       <td class="py-2">
-        PocketBook
-       </td>
-       <td class="py-2">
-        E-reader
-       </td>
-       <td class="py-2">
-        Rome Digital Hub
-       </td>
-       <td class="py-2">
-        17/09/2024
-       </td>
-       <td class="py-2">
-        189
-       </td>
-      </tr>
-     </tbody>
-    </table>
-   </div>
+    <p id="noOverdueUsers" class="text-gray-600 mt-4 hidden">Nessun prestito > 180 giorni.</p>
+  </div>
+
+   
   </main>
   <footer class="bg-white shadow mt-12">
     <div class="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -290,6 +168,9 @@
     </div>
    </footer>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="../js/userMenu.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/userMenu.js"></script>
+<script src="../js/admin.js"></script>
+
  </body>
 </html>

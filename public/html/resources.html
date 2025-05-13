@@ -50,12 +50,25 @@
   </header>
   <!-- Main Content -->
   <main class="container mx-auto px-4 py-8">
+    <script>
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isAdmin = user && (user.ruolo === 'admin' || user.ruolo === 'amministratore');
+</script>
+
    <h2 class="text-2xl font-bold mb-2">
     Resource Catalog
    </h2>
    <p class="text-gray-600 mb-6">
     Browse all available resources across our centers
    </p>
+   <!-- Pulsante Admin -->
+<div id="addResBtnContainer" class="mb-6" style="display:none">
+  <button id="addResBtn"
+    class="fixed bg-green-600 hover:bg-green-700 text-white bottom-4 right-4 w-40 h-12 rounded-lg transition ">
+    Aggiungi 
+  </button>
+</div>
+
    <!-- Search and Filters -->
       <!-- Search and Filters -->
 <div class="flex items-center space-x-4 mb-6">
@@ -93,6 +106,46 @@
    <!-- Resource Cards -->
    <!-- Container for dynamic resource cards -->
 <div id="resourceContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+<!-- Modal Inserimento Risorsa -->
+<div id="addResModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
+    <h3 class="text-xl font-semibold mb-4">Nuova Risorsa</h3>
+    <form id="addResForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input id="nome"           placeholder="Nome"           class="border rounded px-3 py-2"/>
+      <input id="marca"          placeholder="Marca"          class="border rounded px-3 py-2"/>
+      <!-- <label class="col-span-full text-sm font-semibold text-gray-700">Tipo</label> -->
+<select id="tipo" required class="border rounded px-3 py-2">
+  <option value="">Seleziona Tipo</option>
+  <option value="hardware">Hardware</option>
+  <option value="software">Software</option>
+</select>
+      <input id="disponibilita"  type="number" placeholder="Disponibilità"  class="border rounded px-3 py-2"/>
+      <input id="quantita"       type="number" placeholder="Quantità"       class="border rounded px-3 py-2"/>
+      <input id="data_rilascio"  type="date"   placeholder="Data Rilascio" class="border rounded px-3 py-2"/>
+      <input id="casa_produttrice" placeholder="Casa Produttrice" class="border rounded px-3 py-2"/>
+      <input id="categoria_didattico" placeholder="Categoria Didattico" class="border rounded px-3 py-2"/>
+      <input id="piattaforma_didattico" placeholder="Piattaforma" class="border rounded px-3 py-2"/>
+      <input id="lingua_didattico" placeholder="Lingua" class="border rounded px-3 py-2"/>
+      <input id="pegi" placeholder="PEGI" class="border rounded px-3 py-2"/>
+      <input id="miniature" placeholder="URL Immagine" class="border rounded px-3 py-2"/>
+      <!-- <label class="col-span-full text-sm font-semibold text-gray-700">Centro</label> -->
+<select id="id_centro" required class="border rounded px-3 py-2">
+  <option value="">Caricamento centri...</option>
+</select>
+      <textarea id="descrizione" placeholder="Descrizione" class="border rounded px-3 py-2 col-span-full"></textarea>
+      <div class="col-span-full flex justify-end space-x-2 mt-2">
+        <button type="button" id="cancelAddRes" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded">Annulla</button>
+        <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded">Salva</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  // Mostra pulsante se admin
+  if (isAdmin) document.getElementById('addResBtnContainer').style.display = 'block';
+</script>
+
+
   </main>
   <!-- Footer -->
   <footer class="bg-white shadow mt-12">

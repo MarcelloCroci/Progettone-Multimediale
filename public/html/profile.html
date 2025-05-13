@@ -50,7 +50,48 @@
       <div id="userInfo" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
         <!-- Popolato da JS -->
       </div>
+      <div class="mt-4">
+        <button id="editProfileBtn"
+          class="py-2 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition">
+          Modifica profilo
+        </button>
+      </div>
     </section>
+
+    <!-- Modal per modifica profilo -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+      <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        <h3 class="text-xl font-semibold mb-4">Modifica Profilo</h3>
+        <form id="editForm" class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-600">Nome</label>
+            <input id="editNome" type="text" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600">Cognome</label>
+            <input id="editCognome" type="text" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600">Email</label>
+            <input id="editEmail" type="email" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600">Telefono</label>
+            <input id="editTelefono" type="text" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600">Data di Nascita</label>
+            <input id="editDdn" type="date" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div class="flex justify-end space-x-2 mt-4">
+            <button type="button" id="cancelEdit"
+              class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded">Annulla</button>
+            <button type="submit"
+              class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded">Salva</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <!-- Prestiti Attivi -->
     <section class="mb-12">
@@ -69,7 +110,28 @@
       </div>
       <p id="noPrenotazioni" class="text-gray-600" hidden>Nessuna prenotazione.</p>
     </section>
+
+    <!-- Risorse oltre 180 giorni -->
+    <section class="mt-12">
+      <h3 class="text-xl font-semibold mb-4">Prestiti da più di 180 giorni</h3>
+      <div class="overflow-x-auto">
+        <table id="overdueTable" class="min-w-full bg-white rounded-lg shadow hidden">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700">
+              <th class="px-4 py-2">Risorsa</th>
+              <th class="px-4 py-2">Data Prestito</th>
+              <th class="px-4 py-2">Data Restituzione (Scadenza)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Popolato da JS -->
+          </tbody>
+        </table>
+      </div>
+      <p id="noOverdue" class="text-gray-600" hidden>Nessun prestito vecchio.</p>
+    </section>
   </main>
+
 
   <footer class="bg-white shadow mt-12">
     <div class="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
