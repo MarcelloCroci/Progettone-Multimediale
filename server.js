@@ -31,7 +31,7 @@ app.get('/api/risorse', async (req, res) => {
 
   if (search) {
     values.push(`%${search.toLowerCase()}%`);
-    clauses.push(`(LOWER(nome) LIKE $${values.length} OR LOWER(tipo) LIKE $${values.length})`);
+    clauses.push(`(LOWER(nome) LIKE $${values.length} OR LOWER(tipo) LIKE $${values.length} OR LOWER(marca) LIKE $${values.length})`);
   }
   if (tipo) {
     values.push(tipo.toLowerCase());

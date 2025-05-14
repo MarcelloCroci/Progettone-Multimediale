@@ -2,8 +2,8 @@ $(function() {
   // Funzione per caricare e mostrare tutte le risorse
   function loadRisorse() {
     const searchParams = {
-      search: $('#cercaID').val(),
-      tipo: $('#tipoFilter').val()
+      search: $('#searchInput').val(),
+      tipo: $('#tipoFiltro').val()
     };
 
     $.ajax({
@@ -55,8 +55,10 @@ $(function() {
   }
 
   // Handler per filtro "Tipo"
-  $('#tipoFilter').on('change', loadRisorse);
-  $('#cercaID').on('keyup', loadRisorse);
+  $('#tipoFiltro').on('change', loadRisorse);
+  $('#searchInput').on('keyup', loadRisorse);
+
+  $('button:contains("Apply")').on('click', loadRisorse);
 
   // Chiamata iniziale
   loadRisorse();
