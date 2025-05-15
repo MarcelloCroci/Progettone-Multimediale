@@ -95,7 +95,7 @@
         </div>
         <!-- Bottone visibile solo agli admin -->
 <div id="adminActions" class="mt-4 hidden">
-  <button id="editResourceBtn" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+  <button id="editResourceBtn" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
     Modifica Risorsa
   </button>
 </div>
@@ -104,7 +104,13 @@
       
       <!-- Right Section: Center & Availability -->
       <div class="space-y-6">
-        <!-- ... mantieni le info centro se vuoi ... -->
+        <div class="bg-white p-4 shadow rounded-lg">
+          <h3 class="text-lg font-semibold text-gray-800 mb-3">Disponibile nei Centri</h3>
+          <ul id="centerAvailabilityList" class="divide-y divide-gray-200">
+            <!-- Riempito dinamicamente da JS -->
+            <li class="py-2 text-sm text-gray-600">Caricamento...</li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -122,23 +128,41 @@
   <div class="bg-white rounded-lg shadow-lg w-full max-w-xl p-6 m-auto">
     <h3 class="text-xl font-semibold mb-4">Modifica Risorsa</h3>
     <form id="editForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input type="text" id="editNome" placeholder="Nome" class="border rounded px-3 py-2" required>
-      <input type="text" id="editMarca" placeholder="Marca" class="border rounded px-3 py-2">
-      <select id="editTipo" class="border rounded px-3 py-2" required>
-        <option value="">Seleziona tipo</option>
-        <option value="hardware">Hardware</option>
-        <option value="software">Software</option>
-      </select>
-      <input type="number" id="editDisponibilita" placeholder="Disponibilità" class="border rounded px-3 py-2" required>
-      <input type="number" id="editQuantita" placeholder="Quantità" class="border rounded px-3 py-2" required>
-      <input type="text" id="editMiniatura" placeholder="URL Immagine" class="border rounded px-3 py-2">
-
+      <div>
+        <label for="editNome" class="text-sm font-semibold text-gray-700">Nome:</label><br>
+        <input type="text" id="editNome" placeholder="Nome" class="border rounded-lg px-3 py-2" required>
+      </div>
+      <div>
+        <label for="editMarca">Marca:</label><br>
+        <input type="text" id="editMarca" placeholder="Marca" class="border rounded-lg px-3 py-2">
+      </div>
+      <div>
+        <label for="editTipo">Tipo:</label><br>
+        <select id="editTipo" class="border rounded-lg px-3 py-2" required>
+          <option value="">Seleziona tipo</option>
+          <option value="hardware">Hardware</option>
+          <option value="software">Software</option>
+        </select>
+      </div>
+      <div>
+        <label for="editDisponibilita">Disponibilità:</label><br>
+        <input type="number" id="editDisponibilita" placeholder="Disponibilità" class="border rounded-lg px-3 py-2" required>
+      </div>
+      <div>
+        <label for="editQuantita">Quantità:</label><br>
+        <input type="number" id="editQuantita" placeholder="Quantità" class="border rounded-lg px-3 py-2" required>
+      </div>
+      <div>
+        <label for="editMiniatura">Immagine:</label><br>
+        <input type="text" id="editMiniatura" placeholder="URL Immagine" class="border rounded-lg px-3 py-2">
+      </div>
+      
       <div class=" flex justify-start space-x-2 mt-2">
-        <button type="button" id="deleteResourceBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Elimina</button>
+        <button type="button" id="deleteResourceBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Elimina</button>
       </div>
       <div class=" flex justify-end space-x-2 mt-2">
-        <button type="button" id="cancelEditBtn" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded">Annulla</button>
-        <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded">Salva</button>
+        <button type="button" id="cancelEditBtn" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg">Annulla</button>
+        <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg">Salva</button>
       </div>
     </form>
   </div>

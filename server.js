@@ -533,6 +533,47 @@ app.delete('/api/risorse/:id', async (req, res) => {
   }
 });
 
+// endpoint GET /api/risorsa/:id/centri
+app.get('/api/risorsa/:id/centri', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { rows } = await pool.query(`
+      SELECT C.nome_centro, C.citta, C.regione, R.disponibilita
+      FROM Risorsa R
+      JOIN Centro C ON R.id_centro = C.id_centro
+      WHERE R.id_risorsa = $1
+    `, [id]);
+
+    res.json(rows);
+  } catch (err) {
+    console.error("Errore /api/risorsa/:id/centri", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Crea una nuova recensione
+app.post('/api/recensioni', async (req, res) => {
+  const { id_utente, id_risorsa, titolo_r, testo_r, voto } = req.body;
+  if (!id_utente || !id_risorsa || !titolo_r || !testo_r || !voto) {
+    return res.status(400).json({ error: 'Campi mancanti.' });
+  }
+  try {
+    const sql = `
+      INSERT INTO Recensione (id_risorsa, id_utente, titolo_r, testo_r, voto, segnalazione)
+      VALUES ($1,$2,$3,$4,$5,FALSE)
+      RETURNING *;
+    `;
+    const values = [id_risorsa, id_utente, titolo_r, testo_r, voto];
+    const { rows } = await pool.query(sql, values);
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Errore POST /api/recensioni:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 
 // Avvio del server
 const PORT = process.env.PORT || 3000;
