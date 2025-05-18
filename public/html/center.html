@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pack2Go</title>
+  <link rel="shortcut icon" href="../img/box.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+     <div class="flex items-center space-x-4">
+      <img alt="Pack2Go logo" class="h-10 w-10" src="../img/box.png">
+      <h1 class="text-xl font-semibold">
+       Pack2Go
+      </h1>
+     </div>
+     <nav class="flex items-center space-x-6">
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/home.html">Home</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources.html">Catalogo</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Centri</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/cart.html">Carrello</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Statistiche</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/about-us.html">About us</a>
+      <!-- User Menu -->
+<div id="userMenu" class="relative inline-block text-left">
+  <button id="userBtn" type="button"
+    class="flex items-center justify-center h-10 w-10 rounded-full bg-[#714be1] text-white focus:outline-none"
+    aria-expanded="false" aria-haspopup="true">
+    <!-- Contenuto gestito da JS -->
+  </button>
+  <!-- Dropdown -->
+  <div id="userDropdown"
+       class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="userBtn">
+      <!-- Voci gestite da JS -->
+    </div>
+  </div>
+</div>
+
+     </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-2">Resource Centers</h1>
+    <p class="text-gray-500 mb-6">Explore our network of centers across the country</p>
+
+    <!-- Search input -->
+<div class="relative mb-8">
+  <input 
+    id="searchCenter"
+    type="text"
+    placeholder="Search centers by name, city, region or CAP..."
+    class="w-full md:w-1/2 px-4 py-2 pl-10 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+  />
+  <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+</div>
+
+<!-- Container per le card dei centri -->
+<div id="centriContainer" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow mt-12">
+    <div class="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Pack2Go
+      </h4>
+      <p class="text-gray-600">
+       Una rete di centri di risorse in tutto il paese, che forniscono risorse hardware e software al pubblico.
+      </p>
+      <div class="flex space-x-4 mt-4">
+       <i class="fab fa-facebook text-gray-600">
+       </i>
+       <i class="fab fa-twitter text-gray-600">
+       </i>
+       <i class="fab fa-instagram text-gray-600">
+       </i>
+       <i class="fab fa-linkedin text-gray-600">
+       </i>
+      </div>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Pagine
+      </h4>
+      <ul class="space-y-2">
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./home.html">
+         Home
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources.html">
+         Catalogo
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./center.html">
+         Centri
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./cart.html">
+         Carrello
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources_hub_admin.html">
+         Statistiche
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]">
+         About Us
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Contatti
+      </h4>
+      <p class="text-gray-600">
+       Via Roma 123, 00100 Roma, Italia
+      </p>
+      <p class="text-gray-600">
+       +39 0123 4567
+      </p>
+      <p class="text-gray-600">
+       info@Pack2Go.com
+      </p>
+     </div>
+    </div>
+   </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/userMenu.js"></script>
+<script src="../js/center.js"></script>
+
+</body>
+</html>
+

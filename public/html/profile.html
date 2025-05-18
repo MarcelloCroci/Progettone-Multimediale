@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../img/box.png" type="image/x-icon">
+  <title>Profilo Utente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header con user menu -->
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="../img/box.png" alt="Pack2Go logo" class="h-10 w-10"/>
+        <h1 class="text-xl font-semibold">Pack2Go</h1>
+      </div>
+      <nav class="flex items-center space-x-6">
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/home.html">Home</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources.html">Catalogo</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Centri</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/cart.html">Carrello</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Statistiche</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/about-us.html">About us</a>
+      <!-- User Menu -->
+<div id="userMenu" class="relative inline-block text-left">
+  <button id="userBtn" type="button"
+    class="flex items-center justify-center h-10 w-10 rounded-full bg-[#714be1] text-white focus:outline-none"
+    aria-expanded="false" aria-haspopup="true">
+    <!-- Contenuto gestito da JS -->
+  </button>
+  <!-- Dropdown -->
+  <div id="userDropdown"
+       class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="userBtn">
+      <!-- Voci gestite da JS -->
+    </div>
+  </div>
+</div>
+
+     </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-8">
+    <!-- Info Utente -->
+    <section class="mb-12 bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Il Mio Profilo</h2>
+      <div id="userInfo" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+        <!-- Popolato da JS -->
+      </div>
+      <div class="mt-4">
+        <button id="editProfileBtn"
+          class="py-2 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition">
+          Modifica profilo
+        </button>
+      </div>
+    </section>
+
+    <!-- Modal per modifica profilo -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+      <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        <h3 class="text-xl font-semibold mb-4">Modifica Profilo</h3>
+        <form id="editForm" class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-600">Nome</label>
+            <input id="editNome" type="text" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600">Cognome</label>
+            <input id="editCognome" type="text" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600">Email</label>
+            <input id="editEmail" type="email" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600">Telefono</label>
+            <input id="editTelefono" type="text" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600">Data di Nascita</label>
+            <input id="editDdn" type="date" class="w-full border rounded px-3 py-2"/>
+          </div>
+          <div class="flex justify-end space-x-2 mt-4">
+            <button type="button" id="cancelEdit"
+              class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded">Annulla</button>
+            <button type="submit"
+              class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded">Salva</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Prestiti Attivi -->
+    <section class="mb-12">
+      <h3 class="text-xl font-semibold mb-4">Prestiti Attivi</h3>
+      <div id="prestitiContainer" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Popolato da JS -->
+      </div>
+      <p id="noPrestiti" class="text-gray-600" hidden>Nessun prestito attivo.</p>
+    </section>
+
+    <!-- Prenotazioni -->
+    <section>
+      <h3 class="text-xl font-semibold mb-4">Prenotazioni</h3>
+      <div id="prenotazioniContainer" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Popolato da JS -->
+      </div>
+      <p id="noPrenotazioni" class="text-gray-600" hidden>Nessuna prenotazione.</p>
+    </section>
+
+    <!-- Risorse oltre 180 giorni -->
+    <section class="mt-12">
+      <h3 class="text-xl font-semibold mb-4">Prestiti da più di 180 giorni</h3>
+      <div class="overflow-x-auto">
+        <table id="overdueTable" class="min-w-full bg-white rounded-lg shadow hidden">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700">
+              <th class="px-4 py-2">Risorsa</th>
+              <th class="px-4 py-2">Data Prestito</th>
+              <th class="px-4 py-2">Data Restituzione (Scadenza)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Popolato da JS -->
+          </tbody>
+        </table>
+      </div>
+      <p id="noOverdue" class="text-gray-600" hidden>Nessun prestito vecchio.</p>
+    </section>
+  </main>
+
+
+  <!-- Modal Lascia Recensione -->
+<div id="reviewModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white w-full max-w-md mx-4 rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-semibold mb-4">Lascia una Recensione</h3>
+    <form id="reviewForm" class="space-y-4">
+      <input type="hidden" id="reviewRisorsaId">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Titolo</label>
+        <input id="reviewTitolo" type="text" required
+               class="w-full border rounded px-3 py-2"/>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Testo</label>
+        <textarea id="reviewTesto" rows="4" required
+                  class="w-full border rounded px-3 py-2"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Voto</label>
+        <select id="reviewVoto" required
+                class="w-full border rounded px-3 py-2">
+          <option value="">Seleziona voto</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button type="button" id="cancelReview"
+                class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg">
+          Annulla
+        </button>
+        <button type="submit"
+                class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg">
+          Invia
+        </button>
+      </div>
+    </form>
+    <!-- Recensione -->
+    <section class="mb-12">
+     <h3 class="text-xl font-semibold mb-4">Le mie recensioni</h3>
+     <div id="recensioniContainer"></div>
+    </section>
+
+  </div>
+</div>
+
+
+  <footer class="bg-white shadow mt-12">
+    <div class="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Pack2Go
+      </h4>
+      <p class="text-gray-600">
+       Una rete di centri di risorse in tutto il paese, che forniscono risorse hardware e software al pubblico.
+      </p>
+      <div class="flex space-x-4 mt-4">
+       <i class="fab fa-facebook text-gray-600">
+       </i>
+       <i class="fab fa-twitter text-gray-600">
+       </i>
+       <i class="fab fa-instagram text-gray-600">
+       </i>
+       <i class="fab fa-linkedin text-gray-600">
+       </i>
+      </div>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Pagine
+      </h4>
+      <ul class="space-y-2">
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./home.html">
+         Home
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources.html">
+         Catalogo
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./center.html">
+         Centri
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./cart.html">
+         Carrello
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources_hub_admin.html">
+         Statistiche
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]">
+         About Us
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Contatti
+      </h4>
+      <p class="text-gray-600">
+       Via Roma 123, 00100 Roma, Italia
+      </p>
+      <p class="text-gray-600">
+       +39 0123 4567
+      </p>
+      <p class="text-gray-600">
+       info@Pack2Go.com
+      </p>
+     </div>
+    </div>
+   </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/userMenu.js"></script>
+  <script src="../js/profile.js"></script>
+</body>
+</html>

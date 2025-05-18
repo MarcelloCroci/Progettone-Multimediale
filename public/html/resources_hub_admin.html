@@ -1,0 +1,182 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <link rel="shortcut icon" href="../img/box.png" type="image/x-icon">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Pack2Go
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ </head>
+ <body class="bg-gray-50 text-gray-800">
+    <header class="bg-white shadow">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+     <div class="flex items-center space-x-4">
+      <img alt="Pack2Go logo" class="h-10 w-10" src="../img/box.png">
+      <h1 class="text-xl font-semibold">
+       Pack2Go
+      </h1>
+     </div>
+     <nav class="flex items-center space-x-6">
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/home.html">Home</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources.html">Catalogo</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Centri</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/cart.html">Carrello</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Statistiche</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/about-us.html">About us</a>
+      <!-- User Menu -->
+<div id="userMenu" class="relative inline-block text-left">
+  <button id="userBtn" type="button"
+    class="flex items-center justify-center h-10 w-10 rounded-full bg-[#714be1] text-white focus:outline-none"
+    aria-expanded="false" aria-haspopup="true">
+    <!-- Contenuto gestito da JS -->
+  </button>
+  <!-- Dropdown -->
+  <div id="userDropdown"
+       class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="userBtn">
+      <!-- Voci gestite da JS -->
+    </div>
+  </div>
+</div>
+
+     </nav>
+    </div>
+  </header>
+  <main class="container mx-auto px-6 py-8">
+    <script>
+// Redirect se non admin
+const user = JSON.parse(localStorage.getItem('user'));
+if (!user || (user.ruolo !== 'admin' && user.ruolo !== 'amministratore')) {
+  alert('Accesso riservato agli amministratori');
+  window.location.href = 'login.html';
+}
+</script>
+<!-- Resource Usage Over Time -->
+<div class="bg-white shadow rounded-lg p-6 mb-10">
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="text-lg font-semibold text-gray-800">Resource Usage Over Time</h3>
+    <select id="categoryFilter" class="border border-gray-300 rounded px-3 py-1 text-gray-600">
+      <option value="">All Categories</option>
+    </select>
+  </div>
+  <canvas id="loanChart" class="w-full h-48"></canvas>
+</div>
+
+<!-- Most Used Categories -->
+<div class="bg-white shadow rounded-lg p-6">
+  <h3 class="text-lg font-semibold text-gray-800 mb-4">Most Used Categories</h3>
+  <canvas id="catChart" class="w-full h-48"></canvas>
+</div>
+
+
+
+  <!-- Tabella Utenti con prestiti >180 giorni -->
+  <div class="bg-white shadow rounded-lg p-6 mt-8">
+    <h3 class="text-lg font-semibold mb-4">Utenti con prestiti attivi da &gt;180 giorni</h3>
+    <div class="overflow-x-auto">
+      <table id="overdueUserTable" class="min-w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-gray-700">
+            <th class="px-4 py-2">Utente</th>
+            <th class="px-4 py-2">Email</th>
+            <th class="px-4 py-2">Risorsa</th>
+            <th class="px-4 py-2">Data Prestito</th>
+            <th class="px-4 py-2">Giorni su Loan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- popolato da JS -->
+        </tbody>
+      </table>
+    </div>
+    <p id="noOverdueUsers" class="text-gray-600 mt-4 hidden">Nessun prestito > 180 giorni.</p>
+  </div>
+
+   
+  </main>
+  <footer class="bg-white shadow mt-12">
+    <div class="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Pack2Go
+      </h4>
+      <p class="text-gray-600">
+       Una rete di centri di risorse in tutto il paese, che forniscono risorse hardware e software al pubblico.
+      </p>
+      <div class="flex space-x-4 mt-4">
+       <i class="fab fa-facebook text-gray-600">
+       </i>
+       <i class="fab fa-twitter text-gray-600">
+       </i>
+       <i class="fab fa-instagram text-gray-600">
+       </i>
+       <i class="fab fa-linkedin text-gray-600">
+       </i>
+      </div>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Pagine
+      </h4>
+      <ul class="space-y-2">
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./home.html">
+         Home
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources.html">
+         Catalogo
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./center.html">
+         Centri
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./cart.html">
+         Carrello
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources_hub_admin.html">
+         Statistiche
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]">
+         About Us
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Contatti
+      </h4>
+      <p class="text-gray-600">
+       Via Roma 123, 00100 Roma, Italia
+      </p>
+      <p class="text-gray-600">
+       +39 0123 4567
+      </p>
+      <p class="text-gray-600">
+       info@Pack2Go.com
+      </p>
+     </div>
+    </div>
+   </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/userMenu.js"></script>
+<script src="../js/admin.js"></script>
+
+ </body>
+</html>

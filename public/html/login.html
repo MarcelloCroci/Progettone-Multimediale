@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../img/box.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Log In</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styleH.css">
+</head>
+<body class="bg-gray-100">
+  <div class="relative py-10 sm:max-w-xl sm:mx-auto">
+    <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+      <div class="max-w-md mx-auto">
+        <img src="../img/box.png" alt="Logo" class="h-12 m-auto">
+        <h2 class="font-bold text-center text-[#714be1] text-3xl mt-5">Accedi</h2>
+        
+        <!-- FORM LOGIN -->
+        <form id="loginForm" class="mt-5 grid grid-cols-1 gap-5">
+          <div>
+            <label for="email" class="font-semibold text-sm text-gray-600 block mb-1">Email</label>
+            <input id="email" type="email" required
+              class="border rounded-lg px-3 py-2 w-full focus:border-[#714be1] focus:ring-2 focus:ring-[#714be1]"/>
+          </div>
+          <div>
+            <label for="password" class="font-semibold text-sm text-gray-600 block mb-1">Password</label>
+            <input id="password" type="password" required
+              class="border rounded-lg px-3 py-2 w-full focus:border-[#714be1] focus:ring-2 focus:ring-[#714be1]"/>
+          </div>
+          <button type="submit"
+            class="py-2 px-4 bg-[#714be1] hover:bg-violet-500 text-white font-semibold rounded-lg transition">
+            Log In
+          </button>
+        </form>
+
+        <div class="flex items-center justify-center mt-4">
+          <a href="./register.html" class="text-xs text-gray-500 hover:underline">Non sei registrato? Registrati</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery + login.js -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+
+</html>
