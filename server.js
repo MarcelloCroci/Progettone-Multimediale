@@ -44,7 +44,6 @@ app.get('/api/risorse', async (req, res) => {
     FROM Risorsa
     ${where}
     ORDER BY nome
-    LIMIT 100
   `;
 
   try {
@@ -62,11 +61,8 @@ app.get('/api/risorsa/:id', async (req, res) => {
   const id = req.params.id;
   const sql = `
     SELECT 
-      R.id_risorsa, R.nome, R.casa_produttrice, R.descrizione,
-      R.disponibilita, R.quantita, R.data_rilascio, R.pegi,
-      R.tipo, R.categoria_didattico, R.piattaforma_didattico,
-      C.nome_centro AS centro_nome, C.citta AS centro_citta,
-      R.miniature
+      R.*,
+      C.nome_centro AS centro_nome, C.citta AS centro_citta
     FROM Risorsa R
     JOIN Centro C ON R.id_centro = C.id_centro
     WHERE R.id_risorsa = $1
@@ -124,7 +120,6 @@ app.get('/api/centri', async (req, res) => {
     FROM Centro
     ${where}
     ORDER BY nome_centro
-    LIMIT 100
   `;
 
   try {
@@ -442,25 +437,25 @@ app.get('/api/admin/overdue-users', async (req, res) => {
 app.post('/api/risorse', async (req, res) => {
   const {
     nome, marca, tipo, disponibilita, quantita, descrizione,
-    data_rilascio, casa_produttrice, categoria_didattico, lingua_didattico,
-    piattaforma_didattico, pegi, id_centro, miniature
+    data_rilascio, casa_produttrice, versione_didattico, categoria_didattico, lingua_didattico,
+    piattaforma_didattico, pegi, id_centro, miniature, genere_game, trama_game, trailer_game
   } = req.body;
 
   const sql = `
     INSERT INTO Risorsa
       (nome, marca, tipo, disponibilita, quantita, descrizione,
-       data_rilascio, casa_produttrice, categoria_didattico, piattaforma_didattico,
-       lingua_didattico, pegi, id_centro, miniature)
+       data_rilascio, casa_produttrice, versione_didattico, categoria_didattico, piattaforma_didattico,
+       lingua_didattico, pegi, id_centro, miniature, genere_game, trama_game, trailer_game)
     VALUES
-      ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+      ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
     RETURNING *;
   `;
   try {
     const values = [
-      nome, marca, tipo, disponibilita, quantita, descrizione||null,
-      data_rilascio||null, casa_produttrice||null, categoria_didattico||null,
+      nome, marca, tipo, disponibilita, quantita, descrizione||"-",
+      data_rilascio||null, casa_produttrice||null, versione_didattico||null, categoria_didattico||null,
       piattaforma_didattico||null, lingua_didattico||null,
-      pegi||null, id_centro, miniature||null
+      pegi||null, id_centro, miniature||null, genere_game||null, trama_game||null, trailer_game||null
     ];
     const { rows } = await pool.query(sql, values);
     res.json(rows[0]);
@@ -486,35 +481,84 @@ app.get('/api/risorse/:id', async (req, res) => {
   }
 });
 
-// Modifica una risorsa esistente
+// ----------------------------
+// Modifica risorsa (solo campi pertinenti al tipo)
+// ----------------------------
 app.put('/api/risorse/:id', async (req, res) => {
   const { id } = req.params;
   const {
-    nome, marca, tipo, disponibilita, quantita, miniature
+    nome,
+    tipo,
+    disponibilita,
+    descrizione,
+    miniature,
+    // hardware
+    marca,
+    casa_produttrice,
+    // software didattico
+    versione_didattico,
+    categoria_didattico,
+    piattaforma_didattico,
+    lingua_didattico,
+    // videogioco
+    pegi,
+    genere_game,
+    trama_game,
+    trailer_game
   } = req.body;
 
+  // Costruiamo dinamicamente i SET e i valori
+  const fields = ['nome','tipo','disponibilita','descrizione','miniature', 'casa_produttrice'];
+  const values = [
+    nome, tipo, disponibilita,
+    descrizione||null,
+    miniature||null, 
+    casa_produttrice||null
+  ];
+
+  if (tipo === 'hardware') {
+    // campi HW
+    fields.push('marca');
+    values.push(marca||null);
+    // azzeriamo i restanti SW
+    fields.push(
+      'versione_didattico','categoria_didattico','piattaforma_didattico','lingua_didattico',
+      'pegi','genere_game','trama_game','trailer_game'
+    );
+    values.push(null,null,null,null,null,null,null,null);
+
+  } else if (tipo === 'didattico') {
+    // campi SW didattico
+    fields.push('versione_didattico','categoria_didattico','piattaforma_didattico','lingua_didattico');
+    values.push(versione_didattico||null, categoria_didattico||null, piattaforma_didattico||null, lingua_didattico||null);
+    // azzeriamo HW e videogioco
+    fields.push('marca','pegi','genere_game','trama_game','trailer_game');
+    values.push(null,null,null,null,null);
+
+  } else {
+    // campi videogioco
+    fields.push('pegi','genere_game','trama_game','trailer_game');
+    values.push(pegi||null, genere_game||null, trama_game||null, trailer_game||null);
+    // azzeriamo HW e didattico
+    fields.push('marca','versione_didattico','categoria_didattico','piattaforma_didattico','lingua_didattico');
+    values.push(null,null,null,null,null);
+  }
+
+  // componiamo la query
+  const setClause = fields.map((f,i) => `${f}=$${i+1}`).join(', ');
+  values.push(id);
+  const sql = `UPDATE Risorsa SET ${setClause} WHERE id_risorsa = $${values.length}`;
+
   try {
-    const { rowCount } = await pool.query(`
-      UPDATE Risorsa SET
-        nome = $1,
-        marca = $2,
-        tipo = $3,
-        disponibilita = $4,
-        quantita = $5,
-        miniature = $6
-      WHERE id_risorsa = $7
-    `, [nome, marca, tipo, disponibilita, quantita, miniature, id]);
-
-    if (rowCount === 0) {
-      return res.status(404).json({ error: 'Risorsa non trovata' });
-    }
-
+    const { rowCount } = await pool.query(sql, values);
+    if (!rowCount) return res.status(404).json({ error: 'Risorsa non trovata.' });
     res.json({ message: 'Risorsa aggiornata con successo' });
   } catch (err) {
     console.error('Errore PUT /api/risorse/:id', err.stack);
-    res.status(500).json({ error: 'Errore aggiornamento risorsa' });
+    res.status(500).json({ error: 'Errore server interno' });
   }
 });
+
 
 // Elimina una risorsa
 app.delete('/api/risorse/:id', async (req, res) => {

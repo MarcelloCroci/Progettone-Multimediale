@@ -1,27 +1,28 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Pack2Go – Dettagli Risorsa</title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="shortcut icon" href="../img/box.png" type="image/x-icon">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
- </head>
- <body class="bg-gray-50 text-gray-800">
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Header -->
   <header class="bg-white shadow">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-     <div class="flex items-center space-x-4">
-      <img alt="Pack2Go logo" class="h-10 w-10" src="../img/box.png">
-      <h1 class="text-xl font-semibold">
-       Pack2Go
-      </h1>
-     </div>
-     <nav class="flex items-center space-x-6">
+      <div class="flex items-center space-x-4">
+        <img alt="Pack2Go logo" class="h-10 w-10" src="../img/box.png">
+        <h1 class="text-xl font-semibold">Pack2Go</h1>
+      </div>
+      <nav class="flex items-center space-x-6">
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/home.html">Home</a>
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources.html">Catalogo</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Center</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Centri</a>
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/cart.html">Carrello</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Dashboard</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Statistiche</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/about-us.html">About us</a>
       <!-- User Menu -->
 <div id="userMenu" class="relative inline-block text-left">
   <button id="userBtn" type="button"
@@ -41,33 +42,32 @@
      </nav>
     </div>
   </header>
-   <main class="container mx-auto px-6 py-8">
+
+  <!-- Main -->
+  <main class="container mx-auto px-6 py-8">
     <a href="resources.html" class="text-[#714be1] text-sm mb-4 inline-block">← Back</a>
 
-    <!-- Sezione principale -->
-    <div id="resourceDetails" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Left Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left column -->
       <div class="lg:col-span-2 bg-white shadow rounded-lg p-6">
-        
-        <div class="flex items-center justify-between mb-4">
+        <!-- Titolo, tipo, stato -->
+        <div class="flex justify-between items-center mb-4">
           <div>
             <h2 id="resName" class="text-2xl font-semibold"></h2>
             <p id="resType" class="text-gray-500"></p>
           </div>
           <span id="resStatus" class="text-sm font-medium px-3 py-1 rounded-full"></span>
         </div>
-        <img id="resImage" src="" alt="" class="m-auto h-64 object-cover mb-4 rounded">
+        <!-- Immagine e descrizione -->
+        <img id="resImage" class="m-auto h-64 object-cover mb-4 rounded" src="" alt="">
         <p id="resDesc" class="text-gray-800 mb-6"></p>
 
+        <!-- Dettagli comuni -->
         <h3 class="text-lg font-semibold mb-4">Dettagli Risorsa</h3>
-        <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <p class="text-gray-500 text-sm">Disponibilità</p>
             <p id="resAvail" class="text-gray-800"></p>
-          </div>
-          <div>
-            <p class="text-gray-500 text-sm">Quantità Totale</p>
-            <p id="resQty" class="text-gray-800"></p>
           </div>
           <div>
             <p class="text-gray-500 text-sm">Data di Acquisizione</p>
@@ -77,37 +77,84 @@
             <p class="text-gray-500 text-sm">Centro</p>
             <p id="resCenter" class="text-gray-800"></p>
           </div>
-          <div>
-            <p class="text-gray-500 text-sm">Categoria</p>
-            <p id="resCat" class="text-gray-800"></p>
-          </div>
-          <div>
-            <p class="text-gray-500 text-sm">Pegi</p>
-            <p id="resPegi" class="text-gray-800"></p>
-          </div>
-        </div>
-        <!-- Aggiungi dopo i dettagli risorsa -->
-        <div class="mt-6">
-          <button
-            id="actionBtn"
-            class="px-6 py-2 rounded-lg text-white transition m-auto"
-          ></button>
-        </div>
-        <!-- Bottone visibile solo agli admin -->
-<div id="adminActions" class="mt-4 hidden">
-  <button id="editResourceBtn" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
-    Modifica Risorsa
-  </button>
-</div>
 
+          <!-- Gruppo hardware -->
+          <div id="hardwareGroup" class="hidden col-span-full space-y-2">
+            <div>
+              <p class="text-gray-500 text-sm">Marca</p>
+              <p id="resMarca" class="text-gray-800"></p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-sm">Casa Produttrice</p>
+              <p id="resCasaH" class="text-gray-800"></p>
+            </div>
+          </div>
+
+          <!-- Gruppo Software Didattico -->
+          <div id="didatticoGroup" class="hidden col-span-full space-y-2">
+            <div>
+              <p class="text-gray-500 text-sm">Casa Produttrice</p>
+              <p id="resCasa" class="text-gray-800"></p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-sm">Versione</p>
+              <p id="resVersione" class="text-gray-800"></p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-sm">Categoria</p>
+              <p id="resCategoria" class="text-gray-800"></p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-sm">Lingua</p>
+              <p id="resLingua" class="text-gray-800"></p>
+            </div>
+          </div>
+
+          <!-- Gruppo Videogioco -->
+          <div id="gameGroup" class="hidden col-span-full space-y-2">
+            <div>
+              <p class="text-gray-500 text-sm">Casa Produttrice</p>
+              <p id="resCasaGame" class="text-gray-800"></p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-sm">PEGI</p>
+              <p id="resPegi" class="text-gray-800"></p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-sm">Genere</p>
+              <p id="resGenere" class="text-gray-800"></p>
+            </div>
+            <div>
+              <p class="text-gray-500 text-sm">Trama</p>
+              <p id="resTrama" class="text-gray-800"></p>
+            </div>
+            <div id="resTrailerContainer" class="hidden">
+              <p class="text-gray-500 text-sm">Trailer</p>
+              <!-- <iframe id="resTrailer" class="w-full" frameborder="0" allowfullscreen></iframe> -->
+              <iframe id="resTrailer" class="flex w-full aspect-video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Azione utente -->
+        <div class="flex justify-end space-x-2 h-10">
+          <button id="actionBtn" class="px-4 py-2 rounded-lg text-white transition"></button>
+          <!-- Azioni Admin -->
+          <div id="adminActions" class=" text-right hidden">
+            <button id="editResourceBtn" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
+              Modifica Risorsa
+            </button>
+        </div>
+        </div>
+
+        
       </div>
-      
-      <!-- Right Section: Center & Availability -->
-      <div class="space-y-6">
+
+      <!-- Right column: disponibilità nei centri -->
+      <div>
         <div class="bg-white p-4 shadow rounded-lg">
           <h3 class="text-lg font-semibold text-gray-800 mb-3">Disponibile nei Centri</h3>
           <ul id="centerAvailabilityList" class="divide-y divide-gray-200">
-            <!-- Riempito dinamicamente da JS -->
             <li class="py-2 text-sm text-gray-600">Caricamento...</li>
           </ul>
         </div>
@@ -123,51 +170,121 @@
       <p id="noReviews" class="text-gray-600" hidden>Nessuna recensione disponibile.</p>
     </section>
   </main>
-  <!-- Modal Modifica Risorsa -->
-<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-  <div class="bg-white rounded-lg shadow-lg w-full max-w-xl p-6 m-auto">
-    <h3 class="text-xl font-semibold mb-4">Modifica Risorsa</h3>
-    <form id="editForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <label for="editNome" class="text-sm font-semibold text-gray-700">Nome:</label><br>
-        <input type="text" id="editNome" placeholder="Nome" class="border rounded-lg px-3 py-2" required>
-      </div>
-      <div>
-        <label for="editMarca">Marca:</label><br>
-        <input type="text" id="editMarca" placeholder="Marca" class="border rounded-lg px-3 py-2">
-      </div>
-      <div>
-        <label for="editTipo">Tipo:</label><br>
-        <select id="editTipo" class="border rounded-lg px-3 py-2" required>
-          <option value="">Seleziona tipo</option>
-          <option value="hardware">Hardware</option>
-          <option value="software">Software</option>
-        </select>
-      </div>
-      <div>
-        <label for="editDisponibilita">Disponibilità:</label><br>
-        <input type="number" id="editDisponibilita" placeholder="Disponibilità" class="border rounded-lg px-3 py-2" required>
-      </div>
-      <div>
-        <label for="editQuantita">Quantità:</label><br>
-        <input type="number" id="editQuantita" placeholder="Quantità" class="border rounded-lg px-3 py-2" required>
-      </div>
-      <div>
-        <label for="editMiniatura">Immagine:</label><br>
-        <input type="text" id="editMiniatura" placeholder="URL Immagine" class="border rounded-lg px-3 py-2">
-      </div>
-      
-      <div class=" flex justify-start space-x-2 mt-2">
-        <button type="button" id="deleteResourceBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Elimina</button>
-      </div>
-      <div class=" flex justify-end space-x-2 mt-2">
-        <button type="button" id="cancelEditBtn" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg">Annulla</button>
-        <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg">Salva</button>
-      </div>
-    </form>
-  </div>
-</div>
 
+  <!-- Modal Modifica (tipo non editabile) -->
+  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-xl p-6 space-y-4 m-auto mt-12">
+      <h3 class="text-xl font-semibold mb-4">Modifica Risorsa</h3>
+      <form id="editForm" class="space-y-4">
+
+        <!-- Tipo fisso -->
+        <div>
+          <label class="text-sm font-semibold">Tipo di Risorsa</label>
+          <p id="editTipoLabel" class="mt-1 text-gray-800"></p>
+        </div>
+
+        <!-- Nome -->
+        <div>
+          <label class="text-sm font-semibold">Nome</label>
+          <input type="text" id="editNome" class="border rounded-lg px-3 py-2 w-full" required>
+        </div>
+
+        <!-- Disponibilità -->
+        <div>
+          <label class="text-sm font-semibold">Disponibilità</label>
+          <input type="number" id="editDisponibilita" class="border rounded-lg px-3 py-2 w-full" required>
+        </div>
+
+        <!-- URL Immagine -->
+        <div>
+          <label class="text-sm font-semibold">URL Immagine</label>
+          <input type="text" id="editMiniatura" class="border rounded-lg px-3 py-2 w-full">
+        </div>
+
+        <!-- Casa Produttrice -->
+        <div>
+          <label class="text-sm font-semibold">Casa Produttrice</label>
+          <input type="text" id="editCasa" class="border rounded-lg px-3 py-2 w-full">
+        </div>
+
+        <!-- Hardware-only -->
+        <div id="hwEdit" class="hidden">
+          <label class="text-sm font-semibold">Marca</label>
+          <input type="text" id="editMarca" class="border rounded-lg px-3 py-2 w-full">
+          
+        </div>
+
+        <!-- Software Didattico-only -->
+        <div id="didatticoEdit" class="hidden space-y-2">
+          <label class="text-sm font-semibold">Versione</label>
+          <input type="text" id="editVersione" class="border rounded-lg px-3 py-2 w-full">
+          <label class="text-sm font-semibold">Categoria</label>
+          <input type="text" id="editCategoriaDid" class="border rounded-lg px-3 py-2 w-full">
+          <label class="text-sm font-semibold">Piattaforma</label>
+          <select id="editPiattaforma" class="border rounded px-3 py-2 w-full">
+            <option value="">Seleziona piattaforma</option>
+            <option value="multipiattaforma">Multipiattaforma</option>
+            <option value="mac">Mac</option>
+            <option value="windows">Windows</option>
+          </select>
+          <label class="text-sm font-semibold">Lingua</label>
+          <select id="editLingua" class="border rounded px-3 py-2 w-full">
+            <option value="">Seleziona lingua</option>
+            <option value="CSY">Ceco</option>
+            <option value="ZHH">Cinese (cantonese)</option>
+            <option value="CHS">Cinese (semplificato)</option>
+            <option value="CHT">Cinese (tradizionale)</option>
+            <option value="KOR">Coreano</option>
+            <option value="FRC">Francese (Canada)</option>
+            <option value="FRA">Francese (Francia)</option>
+            <option value="JPN">Giapponese</option>
+            <option value="ENG">Inglese (UK)</option>
+            <option value="ENU">Inglese (USA)</option>
+            <option value="ITA">Italiano</option>
+            <option value="NLD">Olandese</option>
+            <option value="PLK">Polacco</option>
+            <option value="PTB">Portoghese</option>
+            <option value="ROM">Rumeno</option>
+            <option value="RUS">Russo</option>
+            <option value="ESP">Spagnolo</option>
+            <option value="DEU">Tedesco</option>
+            <option value="TRK">Turco</option>
+            <option value="HUN">Ungherese</option>
+          </select>
+        </div>
+
+        <!-- Videogioco-only -->
+        <div id="gameEdit" class="hidden space-y-2">
+          <label class="text-sm font-semibold">PEGI</label>
+          <select id="editPegi" class="border rounded-lg px-3 py-2 w-full">
+            <option value="">Seleziona PEGI</option>
+            <option value="PEGI 3">PEGI 3</option>
+            <option value="PEGI 7">PEGI 7</option>
+            <option value="PEGI 12">PEGI 12</option>
+            <option value="PEGI 16">PEGI 16</option>
+            <option value="PEGI 18">PEGI 18</option>
+          </select>
+          <label class="text-sm font-semibold">Genere</label>
+          <input type="text" id="editGenere" class="border rounded-lg px-3 py-2 w-full">
+          <label class="text-sm font-semibold">Trailer</label>
+          <input type="text" id="editTrailer" class="border rounded-lg px-3 py-2 w-full">
+          <label class="text-sm font-semibold">Trama</label>
+          <textarea id="editTrama" class="border rounded-lg px-3 py-2 w-full"></textarea>
+        </div>
+
+        <!-- Conferma / Annulla -->
+        
+
+        <div class="flex justify-end space-x-2">
+          <div class="flex justify-start space-x-2">
+            <button type="button" id="deleteResourceBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Elimina</button>
+          </div>
+          <button type="button" id="cancelEditBtn" class="px-4 py-2 bg-gray-300 rounded-lg">Annulla</button>
+          <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg">Salva</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <footer class="bg-white shadow mt-12">
     <div class="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
      <div>
@@ -175,7 +292,7 @@
        Pack2Go
       </h4>
       <p class="text-gray-600">
-       A network of resource centers across the country, providing hardware and software resources to the public.
+       Una rete di centri di risorse in tutto il paese, che forniscono risorse hardware e software al pubblico.
       </p>
       <div class="flex space-x-4 mt-4">
        <i class="fab fa-facebook text-gray-600">
@@ -190,22 +307,32 @@
      </div>
      <div>
       <h4 class="text-lg font-semibold mb-4">
-       Quick Links
+       Pagine
       </h4>
       <ul class="space-y-2">
        <li>
-        <a class="text-gray-600 hover:text-[#714be1]" >
+        <a class="text-gray-600 hover:text-[#714be1]" href="./home.html">
          Home
         </a>
        </li>
        <li>
-        <a class="text-gray-600 hover:text-[#714be1]">
-         Resource Catalog
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources.html">
+         Catalogo
         </a>
        </li>
        <li>
-        <a class="text-gray-600 hover:text-[#714be1]">
-         Centers
+        <a class="text-gray-600 hover:text-[#714be1]" href="./center.html">
+         Centri
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./cart.html">
+         Carrello
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources_hub_admin.html">
+         Statistiche
         </a>
        </li>
        <li>
@@ -213,19 +340,14 @@
          About Us
         </a>
        </li>
-       <li>
-        <a class="text-gray-600 hover:text-[#714be1]">
-         Contact
-        </a>
-       </li>
       </ul>
      </div>
      <div>
       <h4 class="text-lg font-semibold mb-4">
-       Contact
+       Contatti
       </h4>
       <p class="text-gray-600">
-       Via Roma 123, 00100 Rome, Italy
+       Via Roma 123, 00100 Roma, Italia
       </p>
       <p class="text-gray-600">
        +39 0123 4567

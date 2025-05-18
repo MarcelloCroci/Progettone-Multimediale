@@ -81,7 +81,7 @@ $(function() {
         list.forEach(p => {
           const card = $(`
             <div class="bg-white p-5 rounded-lg shadow-sm border hover:shadow-md transition cursor-pointer">
-              <img src="${p.miniature}" alt="${p.nome}" class="h-32 w-full object-cover rounded mb-2">
+              <img src="${p.miniature}" alt="${p.nome}" class="h-32 object-cover rounded mb-2 m-auto">
               <h4 class="font-semibold mb-1">${p.nome}</h4>
               <p class="text-gray-600 text-sm">Prestito: ${new Date(p.data_prestito).toLocaleDateString()}</p>
             </div>
@@ -101,38 +101,46 @@ $(function() {
   // 4) Modal recensione
   // —————————————————————————————————————————————
   function openReviewModal(risorsaId) {
-    $('#reviewRisorsaId').val(risorsaId);
-    $('#reviewTitolo').val('');
-    $('#reviewTesto').val('');
-    $('#reviewVoto').val('');
-    $('#reviewModal').removeClass('hidden').addClass('flex');
-  }
+  $('#reviewRisorsaId').val(risorsaId);
+  $('#reviewTitolo').val('');   // reset del titolo
+  $('#reviewTesto').val('');    // reset del testo
+  $('#reviewVoto').val('');     // reset del voto
+  $('#reviewModal').removeClass('hidden').addClass('flex');
+}
+
   $('#cancelReview').on('click', () => {
     $('#reviewModal').addClass('hidden');
   });
 
   $('#reviewForm').on('submit', function(e) {
-    e.preventDefault();
-    const payload = {
-      id_utente: user.id_utente,
-      id_risorsa: $('#reviewRisorsaId').val(),
-      titolo_r: $('#reviewTitolo').val(),
-      testo_r: $('#reviewTesto').val(),
-      voto: parseInt($('#reviewVoto').val(), 10)
-    };
-    $.ajax({
-      url: '/api/recensioni',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify(payload)
-    })
-    .done(() => {
-      alert('Recensione inviata con successo!');
-      $('#reviewModal').addClass('hidden');
-    })
-    .fail(() => {
-      alert('Errore durante l\'invio della recensione.');
-    });
+  e.preventDefault();
+  const titolo = $('#reviewTitolo').val().trim();
+  const testo  = $('#reviewTesto').val().trim();
+  const voto   = $('#reviewVoto').val();
+  if (!titolo || !testo || !voto) {
+    return alert('Per favore compila tutti i campi della recensione.');
+  }
+  const payload = {
+    id_utente:  parseInt(user.id_utente, 10),
+    id_risorsa: parseInt($('#reviewRisorsaId').val(), 10),
+    titolo_r:   titolo,
+    testo_r:    testo,
+    voto:       parseInt(voto, 10)
+  };
+     $.ajax({
+    url: '/api/recensioni',
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(payload)
+  })
+  .done(() => {
+    alert('Recensione inviata con successo!');
+    $('#reviewModal').addClass('hidden');
+  })
+  .fail(xhr => {
+    alert('Errore durante l\'invio della recensione: ' 
+          + (xhr.responseJSON?.error || xhr.statusText));
+  });
   });
 
   // —————————————————————————————————————————————
@@ -150,7 +158,7 @@ $(function() {
         list.forEach(p => {
           c.append(`
             <div class="bg-white p-5 rounded-lg shadow-sm border">
-              <img src="${p.miniature}" alt="${p.nome}" class="h-32 w-full object-cover rounded mb-2">
+              <img src="${p.miniature}" alt="${p.nome}" class="h-32 object-cover rounded mb-2 m-auto">
               <h4 class="font-semibold mb-1">${p.nome}</h4>
               <p class="text-gray-600 text-sm">Prenotato: ${new Date(p.data_prenotazione).toLocaleDateString()}</p>
             </div>

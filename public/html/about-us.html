@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pack2Go – About Us</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="shortcut icon" href="../img/box.png" type="image/x-icon">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="../img/box.png" alt="Pack2Go logo" class="h-10 w-10">
+        <h1 class="text-xl font-semibold">Pack2Go</h1>
+      </div>
+      <nav class="flex items-center space-x-6">
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/home.html">Home</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources.html">Catalogo</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Centri</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/cart.html">Carrello</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Statistiche</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/about-us.html">About us</a>
+      <!-- User Menu -->
+<div id="userMenu" class="relative inline-block text-left">
+  <button id="userBtn" type="button"
+    class="flex items-center justify-center h-10 w-10 rounded-full bg-[#714be1] text-white focus:outline-none"
+    aria-expanded="false" aria-haspopup="true">
+    <!-- Contenuto gestito da JS -->
+  </button>
+  <!-- Dropdown -->
+  <div id="userDropdown"
+       class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="userBtn">
+      <!-- Voci gestite da JS -->
+    </div>
+  </div>
+</div>
+
+     </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-white py-16 text-center">
+    <h2 class="text-4xl font-bold text-gray-800 mb-4">Chi Siamo</h2>
+    <p class="text-gray-600 mx-auto max-w-2xl">
+      Pack2Go è una piattaforma che mette in rete centri di risorse multimediali in tutta Italia,
+      offrendo agli utenti un catalogo unico per consultare, prenotare e prendere in prestito
+      hardware e software di ultima generazione.
+    </p>
+  </section>
+
+  <!-- Mission -->
+  <section class="bg-[#714be1] text-white text-center py-12">
+    <div class="container mx-auto px-6 text-center justify-center ">
+      <h1 class="text-3xl font-bold mb-4">La Nostra Missione</h1>
+      <p class="text-lg mb-6 max-w-5xl m-auto">
+        Facilitare l’accesso alle risorse digitali per studenti, professionisti e appassionati,
+        unendo tecnologia, innovazione e comunità in un unico servizio web semplice e intuitivo.
+      </p>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-6">
+      <h3 class="text-2xl font-semibold text-gray-800 text-center mb-8">Il Nostro Team</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Member 1 -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-md transition">
+          <img src="../img/team/alice.jpg" alt="Isak Mishanj" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+          <h4 class="text-lg font-bold text-gray-800">Isak Mishanj</h4>
+          <p class="text-gray-600">Frontend Developer</p>
+        </div>
+        <!-- Member 2 -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-md transition">
+          <img src="../img/team/andrea.jpg" alt="Valeria Brusamonti" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+          <h4 class="text-lg font-bold text-gray-800">Valeria Brusamonti</h4>
+          <p class="text-gray-600">Backend Developer</p>
+        </div>
+        <!-- Member 3 -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-md transition">
+          <img src="../img/team/marco.jpg" alt="Emilio Boiardi" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+          <h4 class="text-lg font-bold text-gray-800">Emilio Boiardi</h4>
+          <p class="text-gray-600">DevOps Engineer</p>
+        </div>
+        <!-- Member 4 -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-md transition">
+          <img src="../img/team/giulia.jpg" alt="Marcello Croci" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+          <h4 class="text-lg font-bold text-gray-800">Marcello Croci</h4>
+          <p class="text-gray-600">Project Manager</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <h3 class="text-2xl font-semibold text-gray-800 text-center mb-8">I Nostri Valori</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <i class="fas fa-shield-alt text-4xl text-[#714be1] mb-4"></i>
+          <h4 class="font-semibold mb-2">Affidabilità</h4>
+          <p class="text-gray-600">Sicurezza dei dati e disponibilità costante delle risorse.</p>
+        </div>
+        <div class="text-center">
+          <i class="fas fa-users text-4xl text-[#714be1] mb-4"></i>
+          <h4 class="font-semibold mb-2">Comunità</h4>
+          <p class="text-gray-600">Collaborazione tra centri e utenti per un’esperienza condivisa.</p>
+        </div>
+        <div class="text-center">
+          <i class="fas fa-lightbulb text-4xl text-[#714be1] mb-4"></i>
+          <h4 class="font-semibold mb-2">Innovazione</h4>
+          <p class="text-gray-600">Sempre aggiornati sulle ultime tecnologie e best practice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow mt-12">
+    <div class="container mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Pack2Go
+      </h4>
+      <p class="text-gray-600">
+       Una rete di centri di risorse in tutto il paese, che forniscono risorse hardware e software al pubblico.
+      </p>
+      <div class="flex space-x-4 mt-4">
+       <i class="fab fa-facebook text-gray-600">
+       </i>
+       <i class="fab fa-twitter text-gray-600">
+       </i>
+       <i class="fab fa-instagram text-gray-600">
+       </i>
+       <i class="fab fa-linkedin text-gray-600">
+       </i>
+      </div>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Pagine
+      </h4>
+      <ul class="space-y-2">
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./home.html">
+         Home
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources.html">
+         Catalogo
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./center.html">
+         Centri
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./cart.html">
+         Carrello
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources_hub_admin.html">
+         Statistiche
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]">
+         About Us
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="text-lg font-semibold mb-4">
+       Contatti
+      </h4>
+      <p class="text-gray-600">
+       Via Roma 123, 00100 Roma, Italia
+      </p>
+      <p class="text-gray-600">
+       +39 0123 4567
+      </p>
+      <p class="text-gray-600">
+       info@Pack2Go.com
+      </p>
+     </div>
+    </div>
+   </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/userMenu.js"></script>
+</body>
+</html>

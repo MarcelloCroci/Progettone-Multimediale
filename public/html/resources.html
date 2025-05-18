@@ -26,9 +26,10 @@
      <nav class="flex items-center space-x-6">
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/home.html">Home</a>
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources.html">Catalogo</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Center</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Centri</a>
       <a class="text-gray-600 hover:text-[#714be1]" href="../html/cart.html">Carrello</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Dashboard</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Statistiche</a>
+      <a class="text-gray-600 hover:text-[#714be1]" href="../html/about-us.html">About us</a>
       <!-- User Menu -->
 <div id="userMenu" class="relative inline-block text-left">
   <button id="userBtn" type="button"
@@ -69,9 +70,9 @@
   </button>
 </div>
 
-   <!-- Search and Filters -->
+
       <!-- Search and Filters -->
-<div class="flex items-center space-x-4 mb-6">
+<div class="flex items-center space-x-4 mb-6 ">
   <div class="flex items-center bg-white border rounded-lg px-4 py-2 w-full">
     <i class="fas fa-search text-gray-400"></i>
     <input id="searchInput" class="ml-2 w-full focus:outline-none" placeholder="Search by name or type" type="text"/>
@@ -79,7 +80,8 @@
   <select id="tipoFiltro" class="bg-white border rounded-lg px-4 py-2">
     <option value="">All Types</option>
     <option value="hardware">Hardware</option>
-    <option value="software">Software</option>
+    <option value="didattico">Software Didattico</option>
+    <option value="videogioco">Videogioco</option>
   </select>
   <button class="bg-[#714be1] text-white px-4 py-2 rounded-lg">
      Apply
@@ -103,43 +105,127 @@
    <p class="text-gray-600 mb-4">
     5 resources found
    </p>
-   <!-- Resource Cards -->
+
    <!-- Container for dynamic resource cards -->
 <div id="resourceContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-<!-- Modal Inserimento Risorsa -->
+
+<!-- Modal Inserimento Risorsa Multi‑Step -->
 <div id="addResModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-  <div class="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
-    <h3 class="text-xl font-semibold mb-4">Nuova Risorsa</h3>
-    <form id="addResForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input id="nome"           placeholder="Nome"           class="border rounded px-3 py-2"/>
-      <input id="marca"          placeholder="Marca"          class="border rounded px-3 py-2"/>
-      <!-- <label class="col-span-full text-sm font-semibold text-gray-700">Tipo</label> -->
-<select id="tipo" required class="border rounded px-3 py-2">
-  <option value="">Seleziona Tipo</option>
-  <option value="hardware">Hardware</option>
-  <option value="software">Software</option>
-</select>
-      <input id="disponibilita"  type="number" placeholder="Disponibilità"  class="border rounded px-3 py-2"/>
-      <input id="quantita"       type="number" placeholder="Quantità"       class="border rounded px-3 py-2"/>
-      <input id="data_rilascio"  type="date"   placeholder="Data Rilascio" class="border rounded px-3 py-2"/>
-      <input id="casa_produttrice" placeholder="Casa Produttrice" class="border rounded px-3 py-2"/>
-      <input id="categoria_didattico" placeholder="Categoria Didattico" class="border rounded px-3 py-2"/>
-      <input id="piattaforma_didattico" placeholder="Piattaforma" class="border rounded px-3 py-2"/>
-      <input id="lingua_didattico" placeholder="Lingua" class="border rounded px-3 py-2"/>
-      <input id="pegi" placeholder="PEGI" class="border rounded px-3 py-2"/>
-      <input id="miniature" placeholder="URL Immagine" class="border rounded px-3 py-2"/>
-      <!-- <label class="col-span-full text-sm font-semibold text-gray-700">Centro</label> -->
-<select id="id_centro" required class="border rounded px-3 py-2">
-  <option value="">Caricamento centri...</option>
-</select>
-      <textarea id="descrizione" placeholder="Descrizione" class="border rounded px-3 py-2 col-span-full"></textarea>
-      <div class="col-span-full flex justify-end space-x-2 mt-2">
-        <button type="button" id="cancelAddRes" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded">Annulla</button>
-        <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded">Salva</button>
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-xl p-6 space-y-4 relative">
+    <h3 class="text-xl font-semibold mb-2">Nuova Risorsa</h3>
+    
+    <!-- STEP 1: Tipo HW/SW -->
+    <div id="step1" class="modal-step">
+      <label class="block font-semibold">Tipo di Risorsa</label>
+      <select id="tipoSelect" class="border rounded px-3 py-2 w-full">
+        <option value="">Scegli...</option>
+        <option value="hardware">Hardware</option>
+        <option value="software">Software</option>
+      </select>
+      <div class="flex justify-end mt-4">
+        <button id="step1Next" class="px-4 py-2 bg-violet-600 text-white rounded-lg">Avanti</button>
       </div>
-    </form>
+    </div>
+    
+    <!-- STEP 2: per Software scegli sottotipo -->
+    <div id="step2" class="modal-step hidden">
+      <label class="block font-semibold">Categoria Software</label>
+      <select id="swSelect" class="border rounded px-3 py-2 w-full">
+        <option value="">Scegli...</option>
+        <option value="didattico">Software Didattico</option>
+        <option value="videogioco">Videogioco</option>
+      </select>
+      <div class="flex justify-between mt-4">
+        <button id="step2Back" class="px-4 py-2 bg-gray-300 rounded-lg">Indietro</button>
+        <button id="step2Next" class="px-4 py-2 bg-violet-600 text-white rounded-lg">Avanti</button>
+      </div>
+    </div>
+    
+    <!-- STEP 3 non serve, saltiamo -->
+    
+    <!-- STEP 4: campi comuni e specifici -->
+    <div id="step4" class="modal-step hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Comuni -->
+        <input id="nome"           placeholder="Nome"           class="border rounded px-3 py-2" required/>
+        <input id="casa_produttrice" placeholder="Casa produttrice" class="border rounded px-3 py-2" required/>
+        <input id="disponibilita" type="number" placeholder="Disponibilità"  class="border rounded px-3 py-2 w-full" min="0" required/>
+        <input id="data_rilascio"  type="date"               class="border rounded px-3 py-2 w-full" required/>
+        <input id="miniature"      placeholder="URL immagine"  class="border rounded px-3 py-2 w-full" required/>
+        
+        <!-- Solo Hardware -->
+        <div id="hwFields" class="space-y-2">
+          <input id="marca"         placeholder="Marca"          class="border rounded px-3 py-2 w-full" required/>
+        </div>
+        
+        <!-- Solo SW didattico -->
+        <div id="didatticoFields" class="space-y-2 hidden">
+          <input id="versione_didattico"   placeholder="Versione"      class="border rounded px-3 py-2 w-full" required/>
+          <input id="categoria_didattico"  placeholder="Categoria"     class="border rounded px-3 py-2 w-full" required/>
+          <select id="piattaforma_didattico" class="border rounded px-3 py-2 w-full" required>
+            <option value="">Seleziona piattaforma</option>
+            <option value="multipiattaforma">Multipiattaforma</option>
+            <option value="mac">Mac</option>
+            <option value="windows">Windows</option>
+          </select>
+          <select id="lingua_didattico" class="border rounded px-3 py-2 w-full" required>
+            <option value="">Seleziona lingua</option>
+            <option value="CSY">Ceco</option>
+            <option value="ZHH">Cinese (cantonese)</option>
+            <option value="CHS">Cinese (semplificato)</option>
+            <option value="CHT">Cinese (tradizionale)</option>
+            <option value="KOR">Coreano</option>
+            <option value="FRC">Francese (Canada)</option>
+            <option value="FRA">Francese (Francia)</option>
+            <option value="JPN">Giapponese</option>
+            <option value="ENG">Inglese (UK)</option>
+            <option value="ENU">Inglese (USA)</option>
+            <option value="ITA">Italiano</option>
+            <option value="NLD">Olandese</option>
+            <option value="PLK">Polacco</option>
+            <option value="PTB">Portoghese</option>
+            <option value="ROM">Rumeno</option>
+            <option value="RUS">Russo</option>
+            <option value="ESP">Spagnolo</option>
+            <option value="DEU">Tedesco</option>
+            <option value="TRK">Turco</option>
+            <option value="HUN">Ungherese</option>
+          </select>
+          <!-- <input id="lingua_didattico"     placeholder="Lingua"        class="border rounded px-3 py-2 w-full" required/> -->
+        </div>
+        
+        <!-- Solo Videogioco -->
+        <div id="videogiocoFields" class="space-y-2 hidden">
+          <!-- <input id="pegi"         placeholder="PEGI"             class="border rounded px-3 py-2" required/> -->
+          <select id="pegi" class="border rounded px-3 py-2 w-full" required>
+            <option value="">PEGI</option>
+            <option value="PEGI 3">3</option>
+            <option value="PEGI 7">7</option>
+            <option value="PEGI 12">12</option>
+            <option value="PEGI 16">16</option>
+            <option value="PEGI 18">18</option>
+          </select>
+          <input id="genere_game"  placeholder="Genere"           class="border rounded px-3 py-2 w-full" required/>
+          <textarea id="trama_game" placeholder="Trama"           class="border rounded px-3 py-2 col-span-2 w-full" required></textarea>
+          <input id="trailer_game" placeholder="Trailer URL"      class="border rounded px-3 py-2 w-full"/>
+        </div>
+        
+        <!-- Comuni sempre -->
+        <select id="id_centro" class="border rounded px-3 py-2 w-full"></select>
+        <textarea id="descrizione" placeholder="Descrizione" class="border rounded px-3 py-2 col-span-full"></textarea>
+      </div>
+      <div class="flex justify-between mt-4">
+        <button id="step4Back" class="px-4 py-2 bg-gray-300 rounded-lg">Indietro</button>
+        <button id="step4Submit" class="px-4 py-2 bg-green-600 text-white rounded-lg">Salva</button>
+      </div>
+    </div>
+
+    <button id="cancelAddRes" class="absolute top-1 right-6 text-gray-500 hover:text-gray-800 z-100 text-violet-600 text-3xl">
+      <img src="../img/close.png" alt="Chiudi" class="h-4">
+    </button>
   </div>
 </div>
+
 <script>
   // Mostra pulsante se admin
   if (isAdmin) document.getElementById('addResBtnContainer').style.display = 'block';
@@ -155,7 +241,7 @@
        Pack2Go
       </h4>
       <p class="text-gray-600">
-       A network of resource centers across the country, providing hardware and software resources to the public.
+       Una rete di centri di risorse in tutto il paese, che forniscono risorse hardware e software al pubblico.
       </p>
       <div class="flex space-x-4 mt-4">
        <i class="fab fa-facebook text-gray-600">
@@ -170,22 +256,32 @@
      </div>
      <div>
       <h4 class="text-lg font-semibold mb-4">
-       Quick Links
+       Pagine
       </h4>
       <ul class="space-y-2">
        <li>
-        <a class="text-gray-600 hover:text-[#714be1]" >
+        <a class="text-gray-600 hover:text-[#714be1]" href="./home.html">
          Home
         </a>
        </li>
        <li>
-        <a class="text-gray-600 hover:text-[#714be1]">
-         Resource Catalog
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources.html">
+         Catalogo
         </a>
        </li>
        <li>
-        <a class="text-gray-600 hover:text-[#714be1]">
-         Centers
+        <a class="text-gray-600 hover:text-[#714be1]" href="./center.html">
+         Centri
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./cart.html">
+         Carrello
+        </a>
+       </li>
+       <li>
+        <a class="text-gray-600 hover:text-[#714be1]" href="./resources_hub_admin.html">
+         Statistiche
         </a>
        </li>
        <li>
@@ -193,19 +289,14 @@
          About Us
         </a>
        </li>
-       <li>
-        <a class="text-gray-600 hover:text-[#714be1]">
-         Contact
-        </a>
-       </li>
       </ul>
      </div>
      <div>
       <h4 class="text-lg font-semibold mb-4">
-       Contact
+       Contatti
       </h4>
       <p class="text-gray-600">
-       Via Roma 123, 00100 Rome, Italy
+       Via Roma 123, 00100 Roma, Italia
       </p>
       <p class="text-gray-600">
        +39 0123 4567
