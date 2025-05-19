@@ -253,7 +253,7 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/prestiti', async (req, res) => {
   const { id_utente } = req.query;
   const sql = `
-    SELECT P.id_prestito, R.nome, R.miniature, P.data_prestito
+    SELECT P.id_prestito, R.nome, R.miniature, P.data_prestito, R.id_risorsa
     FROM Prestito P
     JOIN Risorsa R ON P.id_risorsa = R.id_risorsa
     WHERE P.id_utente = $1 AND P.data_restituzione IS NULL
@@ -595,24 +595,44 @@ app.get('/api/risorsa/:id/centri', async (req, res) => {
   }
 });
 
-// Crea una nuova recensione
-app.post('/api/recensioni', async (req, res) => {
+
+// Invio recensioni
+app.post("/api/recensione", async (req, res) => {
+  console.log("Richiesta ricevuta:", req.body); 
   const { id_utente, id_risorsa, titolo_r, testo_r, voto } = req.body;
+  
   if (!id_utente || !id_risorsa || !titolo_r || !testo_r || !voto) {
-    return res.status(400).json({ error: 'Campi mancanti.' });
+    return res.status(400).json({ error: "Tutti i campi sono obbligatori" });
   }
+  
   try {
-    const sql = `
-      INSERT INTO Recensione (id_risorsa, id_utente, titolo_r, testo_r, voto, segnalazione)
-      VALUES ($1,$2,$3,$4,$5,FALSE)
-      RETURNING *;
-    `;
-    const values = [id_risorsa, id_utente, titolo_r, testo_r, voto];
-    const { rows } = await pool.query(sql, values);
-    res.json(rows[0]);
-  } catch (err) {
-    console.error('Errore POST /api/recensioni:', err);
-    res.status(500).json({ error: err.message });
+     const movieCheck = await pool.query("SELECT * FROM risorsa WHERE id_risorsa = $1", [id_risorsa]);
+    if (movieCheck.rows.length === 0) {
+      return res.status(404).json({ error: "Risorsa non trovata" });
+    }
+
+    const userCheck = await pool.query("SELECT * FROM utente WHERE id_utente = $1", [id_utente]);
+
+    if (userCheck.rows.length === 0) {
+      return res.status(404).json({ error: "Utente non identificato" });
+    }
+      
+    if (!Number.isInteger(voto) || voto < 1 || voto > 10) {
+      return res.status(400).json({ error: "Valutazione non valida. Deve essere tra 1 e 10." });
+    }
+
+    console.log("Inserendo recensione...");
+
+    const result = await pool.query(
+      "INSERT INTO recensione (id_utente, id_risorsa, titolo_r, testo_r, voto, segnalazione) VALUES ($1, $2, $3, $4, $5, FALSE) RETURNING *",
+      [id_utente, id_risorsa, titolo_r, testo_r, voto]
+    );console.log("Recensione inserita:", result.rows[0]);
+  
+    res.status(201).json(result.rows[0]);
+
+  } catch (error) {
+    console.error("Errore nell'inserimento della recensione:", error.message);
+    res.status(500).json({ error: "Errore durante l'inserimento della recensione" });
   }
 });
 
@@ -626,4 +646,4 @@ app.listen(PORT, () => {
 });
 
 
-module.exports.handler = serverless(app);
+// module.exports.handler = serverless(app);

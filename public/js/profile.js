@@ -84,6 +84,7 @@ $(function() {
               <img src="${p.miniature}" alt="${p.nome}" class="h-32 object-cover rounded mb-2 m-auto">
               <h4 class="font-semibold mb-1">${p.nome}</h4>
               <p class="text-gray-600 text-sm">Prestito: ${new Date(p.data_prestito).toLocaleDateString()}</p>
+              
             </div>
           `);
           // al click apro il modal di recensione
@@ -128,7 +129,7 @@ $(function() {
     voto:       parseInt(voto, 10)
   };
      $.ajax({
-    url: '/api/recensioni',
+    url: '/api/recensione',
     method: 'POST',
     contentType: 'application/json',
     data: JSON.stringify(payload)
