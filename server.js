@@ -4,6 +4,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const path = require('path');
 const bcrypt = require('bcrypt');
+const { log } = require('console');
 
 const app = express();
 app.use(express.json());
