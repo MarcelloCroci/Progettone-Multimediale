@@ -12,39 +12,82 @@
 
   <!-- Header -->
   <header class="bg-white shadow">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-     <div class="flex items-center space-x-4">
-      <img alt="Pack2Go logo" class="h-10 w-10" src="../img/box.png">
-      <h1 class="text-xl font-semibold">
-       Pack2Go
-      </h1>
-     </div>
-     <nav class="flex items-center space-x-6">
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/home.html">Home</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources.html">Catalogo</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/center.html">Centri</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/cart.html">Carrello</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/resources_hub_admin.html">Statistiche</a>
-      <a class="text-gray-600 hover:text-[#714be1]" href="../html/about-us.html">About us</a>
-      <!-- User Menu -->
-<div id="userMenu" class="relative inline-block text-left">
-  <button id="userBtn" type="button"
-    class="flex items-center justify-center h-10 w-10 rounded-full bg-[#714be1] text-white focus:outline-none"
-    aria-expanded="false" aria-haspopup="true">
-    <!-- Contenuto gestito da JS -->
-  </button>
-  <!-- Dropdown -->
-  <div id="userDropdown"
-       class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
-    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="userBtn">
-      <!-- Voci gestite da JS -->
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-4">
+          <img alt="Pack2Go logo" class="h-10 w-10" src="../img/box.png" />
+          <h1 class="text-xl font-semibold">Pack2Go</h1>
+        </div>
+
+            <!-- desktop menu -->
+        <nav class="hidden md:flex items-center space-x-6">
+          <div class="space-x-4">
+            <a href="home.html"      class="text-gray-600 hover:text-[#714be1]">Home</a>
+          <a href="resources.html" class="text-gray-600 hover:text-[#714be1]">Catalogo</a>
+          <a href="center.html"    class="text-gray-600 hover:text-[#714be1]">Centri</a>
+          <a href="cart.html"      class="text-gray-600 hover:text-[#714be1]">Carrello</a>
+          <a href="resources_hub_admin.html" class="text-gray-600 hover:text-[#714be1]">Statistiche</a>
+          <a href="about-us.html"  class="text-gray-600 hover:text-[#714be1]">About Us</a>
+          </div>
+
+                <!-- User Menu -->
+              <div id="userMenu" class="relative inline-block text-left">
+                <button
+                  id="userBtn"
+                  type="button"
+                  class="flex items-center justify-center h-10 w-10 rounded-full bg-[#714be1] text-white focus:outline-none"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  <!-- Contenuto gestito da JS -->
+                </button>
+                <!-- Dropdown -->
+                <div
+                  id="userDropdown"
+                  class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden"
+                >
+                  <div
+                    class="py-1"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="userBtn"
+                  >
+                    <!-- Voci gestite da JS -->
+                  </div>
+                </div>
+              </div>
+        </nav>
+
+      <!-- hamburger button -->
+      <button id="mobileMenuBtn" class="md:hidden focus:outline-none">
+        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="mobileMenuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
     </div>
   </div>
-</div>
 
-     </nav>
+  <!-- mobile menu (hidden by default) -->
+  <nav>
+    <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 hidden">
+      <a href="home.html"      class="block px-6 py-3 text-gray-700 hover:bg-gray-50">Home</a>
+      <a href="resources.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50">Catalogo</a>
+      <a href="center.html"    class="block px-6 py-3 text-gray-700 hover:bg-gray-50">Centri</a>
+      <a href="cart.html"      class="block px-6 py-3 text-gray-700 hover:bg-gray-50">Carrello</a>
+      <a href="resources_hub_admin.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50">Statistiche</a>
+      <a href="about-us.html"  class="block px-6 py-3 text-gray-700 hover:bg-gray-50">About Us</a>
+      <a href="profile.html"  class="block px-6 py-3 text-gray-700 hover:bg-gray-50">Profilo</a>
+      <a href="login.html"  class="block px-6 py-3 text-gray-700 hover:bg-gray-50">Accedi</a>
     </div>
-  </header>
+    
+
+    
+  </nav>
+  
+    </header>
 
   <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 py-12">

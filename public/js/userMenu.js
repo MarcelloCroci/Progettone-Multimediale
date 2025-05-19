@@ -53,3 +53,23 @@ $(document).ready(function() {
     }
   });
 });
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn  = document.getElementById('mobileMenuBtn');
+  const menu = document.getElementById('mobileMenu');
+  let open = false;
+  btn.addEventListener('click', () => {
+    open = !open;
+    menu.classList.toggle('hidden', !open);
+    // disegna la X quando aperto
+    const icon = document.getElementById('mobileMenuIcon');
+    if (open) {
+      icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+    } else {
+      icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+    }
+  });
+});

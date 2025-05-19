@@ -373,7 +373,7 @@ app.get('/api/admin/loan-stats', async (req, res) => {
   try {
     const { rows } = await pool.query(`
       SELECT 
-        to_char(data_prestito, 'YYYY-MM') AS month,
+        to_char(data_prestito, 'MM-YYYY') AS month,
         COUNT(*) AS cnt
       FROM Prestito
       GROUP BY 1

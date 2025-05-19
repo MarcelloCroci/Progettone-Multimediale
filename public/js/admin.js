@@ -26,6 +26,8 @@ $(async function() {
         fill: false,
         tension: 0.3,
         borderWidth: 2,
+        borderColor:'#714be1',
+        backgroundColor:'#714be1'
       }]
     },
     options: {
@@ -60,6 +62,7 @@ $(async function() {
         label: 'Prestiti per categoria',
         data: catCounts,
         borderWidth: 1,
+        backgroundColor:'#704be19f'
       }]
     },
     options: {
