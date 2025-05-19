@@ -15,8 +15,6 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
-// Serve i file statici dalla cartella 'public'
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Carica risorse con filtri
@@ -636,8 +634,11 @@ app.post("/api/recensione", async (req, res) => {
 
 
 
-// infine, per qualunque GET non‑API, torna a home.html
-app.get('/^(?!\/api\/).*/', (req, res) => {
+// Serve i file statici dalla cartella 'public'
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Route per la root → home.html
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'));
 });
 
