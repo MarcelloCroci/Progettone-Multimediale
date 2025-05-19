@@ -18,10 +18,6 @@ const pool = new Pool({
 // Serve i file statici dalla cartella 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Route per la root → home.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'));
-});
 
 // Carica risorse con filtri
 app.get('/api/risorse', async (req, res) => {
@@ -638,6 +634,12 @@ app.post("/api/recensione", async (req, res) => {
 
 
 
+
+
+// infine, per qualunque GET non‑API, torna a home.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'));
+});
 
 // Avvio del server
 const PORT = process.env.PORT || 3000;
