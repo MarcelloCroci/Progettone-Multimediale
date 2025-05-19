@@ -637,7 +637,7 @@ app.post("/api/recensione", async (req, res) => {
 
 
 // infine, per qualunque GET non‑API, torna a home.html
-app.get('*', (req, res) => {
+app.get('/^(?!\/api\/).*/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'));
 });
 
